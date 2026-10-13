@@ -257,3 +257,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Every retrieval (retrieved/failed/skipped, network or cache) is a `RetrievalAttempt` in `retrieval_attempts` (migration 4). Changed bytes for the same document create a new snapshot; `snapshot_versions(accession, filename)` lists them in first-seen order and the old bytes are never overwritten.
 - HTTP cache TTL/validators only decide whether the network is used; `from_cache` is recorded on the attempt, never on the snapshot.
 - `SnapshotRetentionService` (`retention-policy/1`) pins every snapshot referenced by a completed run's manifest or evidence; purging a pinned snapshot raises `ImmutabilityError`, and `missing_pinned()` reports any pinned snapshot whose raw bytes are absent. Unpinned raw bytes may be purged; metadata rows remain and an identical refetch re-attaches.
+
+### Comparator selection (Task 3.1)
+
+- `filinglens.lineage.comparator.select_comparator` (`comparator-policy/1`): 10-K → latest earlier fiscal-year 10-K (gap 350–380 days = confidence 1.0; irregular or missing years lower confidence with notes); 10-Q → same fiscal quarter of the prior year (fiscal quarter from issuer FYE, 52/53-week aware) or the optional sequential lens (Q1 has none: fiscal Q4 lives in the 10-K); 8-K → previous earnings 8-K only for Item 2.02, otherwise explicitly no baseline.
+- Eligibility is `available_at <= as_of`; a focal filing not yet public raises. Excluded candidates and reasons are returned.
+- Amendments: `AmendmentPolicy.ORIGINAL` (default) compares against the original filing of the chosen period; `LATEST_AVAILABLE` uses the newest amendment public by `as_of` (flagged as possibly partial). A focal amendment is compared to the prior period like its base form.
+- `application.comparison.record_comparator` persists comparator accession, reason (mode, policy, notes) and policy version into the run manifest.

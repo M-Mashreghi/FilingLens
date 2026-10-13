@@ -317,7 +317,7 @@ Minimize SEC traffic while preserving exact reproducibility.
 
 ## Task 3.1 — Comparable Filing Selection Policy
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Choose economically defensible baselines using form, fiscal period, amendment lineage, and `as_of` constraints.
@@ -333,10 +333,10 @@ Choose economically defensible baselines using form, fiscal period, amendment li
 
 **Definition of Done**
 
-- [ ] comparator matrix tests pass
-- [ ] fiscal-calendar edge cases covered
-- [ ] no future/amendment leakage
-- [ ] selection reason persisted
+- [x] comparator matrix tests pass
+- [x] fiscal-calendar edge cases covered
+- [x] no future/amendment leakage
+- [x] selection reason persisted
 
 ## Task 3.2 — Amendment, Restatement & Filing Lineage Engine
 
@@ -996,9 +996,9 @@ Exercise production behavior under bounded concurrency and certify research inte
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
-| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
+| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 5 | 0 | 1 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **31** | **0** | **13** |
+| **Total** | **44 tasks** | **30** | **0** | **14** |
