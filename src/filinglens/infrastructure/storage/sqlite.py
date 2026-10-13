@@ -28,6 +28,7 @@ from filinglens.domain.models import (
     Finding,
     Issuer,
     Report,
+    RetrievalAttempt,
     RunState,
     SecurityIdentifier,
     SourceSnapshot,
@@ -105,6 +106,16 @@ MIGRATIONS: list[tuple[int, str]] = [
             source TEXT NOT NULL, source_version TEXT NOT NULL, observed_at TEXT NOT NULL,
             PRIMARY KEY (accession, source, source_version)
         );
+        """,
+    ),
+    (
+        4,
+        """
+        CREATE TABLE retrieval_attempts (
+            attempt_id TEXT PRIMARY KEY, accession TEXT, filename TEXT,
+            attempted_at TEXT NOT NULL, snapshot_id TEXT, payload TEXT NOT NULL
+        );
+        CREATE INDEX ix_attempts_doc ON retrieval_attempts (accession, filename, attempted_at);
         """,
     ),
 ]
@@ -654,6 +665,50 @@ class SqliteReportRepository:
         )
 
 
+class SqliteRetrievalAttemptRepository:
+    def __init__(self, db: Database) -> None:
+        self.db = db
+
+    def add(self, attempt: RetrievalAttempt) -> RetrievalAttempt:
+        with self.db.transaction() as cur:
+            cur.execute(
+                "INSERT INTO retrieval_attempts "
+                "(attempt_id, accession, filename, attempted_at, snapshot_id, payload) "
+                "VALUES (?, ?, ?, ?, ?, ?)",
+                (
+                    attempt.attempt_id,
+                    attempt.accession,
+                    attempt.filename,
+                    attempt.attempted_at.isoformat(),
+                    attempt.snapshot_id,
+                    dumps(attempt),
+                ),
+            )
+        return attempt
+
+    def list_for_document(self, accession: str, filename: str) -> list[RetrievalAttempt]:
+        return _rows(
+            self.db,
+            RetrievalAttempt,
+            "SELECT payload FROM retrieval_attempts WHERE accession = ? AND filename = ? "
+            "ORDER BY attempted_at, attempt_id",
+            (_acc(accession), filename),
+        )
+
+    def snapshot_versions(self, accession: str, filename: str) -> list[str]:
+        seen: list[str] = []
+        for a in self.list_for_document(accession, filename):
+            if a.snapshot_id and a.snapshot_id not in seen:
+                seen.append(a.snapshot_id)
+        return seen
+
+    def referenced_snapshot_ids(self) -> set[str]:
+        rows = self.db.query(
+            "SELECT DISTINCT snapshot_id FROM retrieval_attempts WHERE snapshot_id IS NOT NULL"
+        )
+        return {str(r[0]) for r in rows}
+
+
 @dataclasses.dataclass
 class SqliteRepositories:
     """Convenience bundle wiring every repository to one database."""
@@ -669,6 +724,7 @@ class SqliteRepositories:
     evidence: SqliteEvidenceRepository = dataclasses.field(init=False)
     alerts: SqliteAlertRepository = dataclasses.field(init=False)
     reports: SqliteReportRepository = dataclasses.field(init=False)
+    attempts: SqliteRetrievalAttemptRepository = dataclasses.field(init=False)
 
     def __post_init__(self) -> None:
         self.issuers = SqliteIssuerRepository(self.db)
@@ -681,3 +737,4 @@ class SqliteRepositories:
         self.evidence = SqliteEvidenceRepository(self.db)
         self.alerts = SqliteAlertRepository(self.db)
         self.reports = SqliteReportRepository(self.db)
+        self.attempts = SqliteRetrievalAttemptRepository(self.db)

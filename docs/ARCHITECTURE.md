@@ -250,3 +250,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.parsing.eight_k.parse_eight_k` (`eight-k-parser/1`) turns `Item X.YY` headings into `EightKEvent`s (text, evidence locators, category derived only from the SEC item number, e.g. 2.02 → `earnings`, 4.02 → `non_reliance`). Events stop at the next item or `SIGNATURES`.
 - Exhibit references come from the Item 9.01 exhibit table and `Exhibit NN.N` mentions; they resolve to package `EX-*` documents by numeric exhibit number (`99.1` = `EX-99.01`). Unresolved references are `missing` with a diagnostic; `101`/`104` cover-page XBRL entries are ignored.
 - Normalized exhibit documents (e.g. EX-99.1 earnings releases) can be passed in so their block locators become event evidence. The submissions `items` field is cross-checked and mismatches are reported.
+
+### Snapshot dedup, cache & retention (Task 2.8)
+
+- Snapshot identity is the sha256 of the bytes; repeat retrieval of identical bytes reuses the first-captured snapshot (its `retrieved_at` is the first capture).
+- Every retrieval (retrieved/failed/skipped, network or cache) is a `RetrievalAttempt` in `retrieval_attempts` (migration 4). Changed bytes for the same document create a new snapshot; `snapshot_versions(accession, filename)` lists them in first-seen order and the old bytes are never overwritten.
+- HTTP cache TTL/validators only decide whether the network is used; `from_cache` is recorded on the attempt, never on the snapshot.
+- `SnapshotRetentionService` (`retention-policy/1`) pins every snapshot referenced by a completed run's manifest or evidence; purging a pinned snapshot raises `ImmutabilityError`, and `missing_pinned()` reports any pinned snapshot whose raw bytes are absent. Unpinned raw bytes may be purged; metadata rows remain and an identical refetch re-attaches.

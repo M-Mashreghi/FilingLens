@@ -291,7 +291,7 @@ Treat 8-K as an event filing with item-specific and exhibit-aware intelligence.
 
 ## Task 2.8 — Snapshot Deduplication, Cache & Source-Version Policy
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Minimize SEC traffic while preserving exact reproducibility.
@@ -306,10 +306,10 @@ Minimize SEC traffic while preserving exact reproducibility.
 
 **Definition of Done**
 
-- [ ] repeat retrieval is idempotent
-- [ ] changed bytes never overwrite original
-- [ ] cache tests preserve provenance
-- [ ] completed report never loses required source snapshot
+- [x] repeat retrieval is idempotent
+- [x] changed bytes never overwrite original
+- [x] cache tests preserve provenance
+- [x] completed report never loses required source snapshot
 
 ---
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 1 | 0 | 7 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **32** | **0** | **12** |
+| **Total** | **44 tasks** | **31** | **0** | **13** |

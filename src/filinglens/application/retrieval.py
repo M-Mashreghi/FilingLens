@@ -2,16 +2,18 @@
 
 from __future__ import annotations
 
-from collections.abc import Mapping
+import uuid
+from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from datetime import datetime
 from enum import StrEnum
 from typing import Protocol
 
-from filinglens.application.ports import SnapshotRepository
+from filinglens.application.ports import RetrievalAttemptRepository, SnapshotRepository
 from filinglens.domain.errors import FilingLensError
-from filinglens.domain.models import FilingDocument, SourceSnapshot
+from filinglens.domain.models import FilingDocument, RetrievalAttempt, SourceSnapshot
 from filinglens.domain.package import DocumentRole, PackageManifest
+from filinglens.domain.time import utcnow
 
 RETRIEVER_VERSION = "document-retriever/1"
 
@@ -105,12 +107,17 @@ class DocumentRetriever:
         policy: ExhibitPolicy | None = None,
         *,
         adapter: str = "sec-archives",
+        attempts: RetrievalAttemptRepository | None = None,
+        clock: Callable[[], datetime] = utcnow,
     ) -> None:
         self.fetcher = fetcher
         self.raw_store = raw_store
         self.snapshots = snapshots
         self.policy = policy or ExhibitPolicy()
         self.adapter = adapter
+        self.attempts = attempts
+        self.clock = clock
+        self._from_cache = False
 
     def retrieve_package(self, manifest: PackageManifest) -> PackageRetrieval:
         base_form = (manifest.form or "").removesuffix("/A")
@@ -157,7 +164,29 @@ class DocumentRetriever:
         )
 
     def retrieve(self, doc: FilingDocument) -> RetrievalOutcome:
-        """Fetch one document. A snapshot is recorded only after bytes are stored and verified."""
+        """Fetch one document. A snapshot is recorded only after bytes are stored and verified.
+
+        Every attempt (success, failure or skip) is logged separately from snapshot identity.
+        """
+        self._from_cache = False
+        outcome = self._retrieve(doc)
+        if self.attempts is not None:
+            self.attempts.add(
+                RetrievalAttempt(
+                    attempt_id=uuid.uuid4().hex,
+                    url=doc.url or "",
+                    accession=doc.accession,
+                    filename=doc.filename,
+                    attempted_at=self.clock(),
+                    status=outcome.status.value,
+                    snapshot_id=outcome.snapshot.snapshot_id if outcome.snapshot else None,
+                    reason=outcome.reason,
+                    from_cache=self._from_cache,
+                )
+            )
+        return outcome
+
+    def _retrieve(self, doc: FilingDocument) -> RetrievalOutcome:
         if not doc.url:
             return self._fail(doc, "document has no URL")
         if doc.size_bytes is not None and doc.size_bytes > self.policy.max_bytes:
@@ -171,6 +200,7 @@ class DocumentRetriever:
             resp = self.fetcher.get(doc.url)
         except FilingLensError as exc:
             return self._fail(doc, f"fetch failed: {exc}")
+        self._from_cache = bool(getattr(resp, "from_cache", False))
         data = resp.content
         if len(data) > self.policy.max_bytes:
             return self._fail(doc, f"payload {len(data)} bytes exceeds max_bytes")

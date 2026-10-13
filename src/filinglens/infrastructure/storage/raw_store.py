@@ -69,3 +69,11 @@ class FileSystemRawStore:
 
     def exists(self, key: str) -> bool:
         return self._path(key).exists()
+
+    def delete(self, key: str) -> None:
+        """Remove an object. Callers must enforce the retention policy (pinned snapshots)."""
+        path = self._path(key)
+        with self._lock:
+            if path.exists():
+                path.chmod(0o644)
+                path.unlink()

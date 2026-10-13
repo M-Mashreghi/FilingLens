@@ -53,17 +53,17 @@ Update this file only after task verification.
 - [x] Task 2.5 — Filing HTML / Inline-XBRL Normalizer
 - [x] Task 2.6 — 10-K / 10-Q Item & Section Parser
 - [x] Task 2.7 — 8-K Item & Exhibit Parser
-- [ ] Task 2.8 — Snapshot Deduplication, Cache & Source-Version Policy
+- [x] Task 2.8 — Snapshot Deduplication, Cache & Source-Version Policy
 
 ### Verification — Phase 2
 
 | Item | Detail |
 |---|---|
-| Status | Not Started |
-| Tests | — |
-| Evaluation | — |
-| Docs | — |
-| Notes | — |
+| Status | Completed (2026-10-13) |
+| Tests | `uv run pytest` — 298 passed; ruff + mypy strict green |
+| Evaluation | Section parser fixture corpus 100% required-section success (target >95%); package/8-K exhibit resolution fixtures |
+| Docs | ARCHITECTURE §14, SEC_DATA_CONTRACT §1–2, §6 |
+| Notes | All SEC traffic through SecHttpClient (import guard test); acceptanceDateTime read as US Eastern |
 
 ## Phase 3 — Filing Lineage, Diff & Change Intelligence
 

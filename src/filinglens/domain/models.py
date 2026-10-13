@@ -290,3 +290,26 @@ class Report:
         if self.version < 1:
             raise ValueError("report version starts at 1")
         object.__setattr__(self, "created_at", ensure_utc(self.created_at))
+
+
+@dataclass(frozen=True, kw_only=True)
+class RetrievalAttempt:
+    """One network/cache retrieval event. Separate from immutable snapshot identity."""
+
+    attempt_id: str
+    url: str
+    accession: str | None
+    filename: str | None
+    attempted_at: datetime
+    status: str  # retrieved | failed | skipped
+    snapshot_id: str | None = None
+    reason: str | None = None
+    from_cache: bool = False
+
+    def __post_init__(self) -> None:
+        object.__setattr__(self, "accession", _norm_acc_opt(self.accession))
+        object.__setattr__(self, "attempted_at", ensure_utc(self.attempted_at))
+        if self.status == "retrieved" and self.snapshot_id is None:
+            raise ValueError("a successful retrieval must reference a snapshot")
+        if self.status != "retrieved" and self.snapshot_id is not None:
+            raise ValueError("only successful retrievals reference a snapshot")
