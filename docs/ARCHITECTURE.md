@@ -209,3 +209,11 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Every resolution carries the reference `source`, `source_version` (sha256 of the raw file) and `retrieved_at`; tickers are stored as `SecurityIdentifier` observations, never as durable identity.
 - `filinglens.infrastructure.sec.reference` parses SEC `company_tickers_exchange.json` / `company_tickers.json`; network access is injected (the governed SEC client in live mode). `ReferenceDataCache` applies a TTL and records loaded versions.
 - `filinglens.domain.identifiers.cik10()` produces zero-padded 10-digit CIKs for API paths; `parse_cik()` keeps the numeric form.
+
+### Filing identity & provenance (Task 1.4)
+
+- `AccessionNumber` parses dashed/no-dash forms; every entity that carries an accession stores the canonical dashed form and repositories normalize lookup keys.
+- Archive URL builders and `parse_archive_url` round-trip `(cik, accession, filename)`.
+- `Filing.available_at` follows the `availability/1` policy documented in `SEC_DATA_CONTRACT.md` §6; `filter_as_of` applies it.
+- Amendments are distinct accessions with `is_amendment` and an optional `amends_accession` (never self-referential); an attempt to re-label an existing accession is a `ConflictError`.
+- `SourceSnapshot.from_bytes` captures sha256, size, content type, retrieval time and adapter/version; `verify()` re-checks bytes. Snapshot ids are never overwritten.

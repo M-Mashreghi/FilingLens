@@ -16,6 +16,7 @@ from contextlib import contextmanager
 from pathlib import Path
 from typing import Any, TypeVar
 
+from filinglens.domain.accession import normalize_accession as _acc
 from filinglens.domain.errors import ConflictError, NotFoundError
 from filinglens.domain.models import (
     Alert,
@@ -224,6 +225,8 @@ def merge_filled(existing: T, incoming: T, identity: str) -> T:
     conflicting non-null value raises :class:`ConflictError`. Returns the merged entity."""
     updates: dict[str, Any] = {}
     for f in dataclasses.fields(existing):  # type: ignore[arg-type]
+        if not f.init:  # derived fields are recomputed by __post_init__
+            continue
         old, new = getattr(existing, f.name), getattr(incoming, f.name)
         if old == new or new is None:
             continue
@@ -277,7 +280,7 @@ class SqliteFilingRepository:
 
     def get(self, accession: str) -> Filing | None:
         return _one(
-            self.db, Filing, "SELECT payload FROM filings WHERE accession = ?", (accession,)
+            self.db, Filing, "SELECT payload FROM filings WHERE accession = ?", (_acc(accession),)
         )
 
     def list_for_cik(self, cik: int) -> list[Filing]:
@@ -290,6 +293,7 @@ class SqliteFilingRepository:
         )
 
     def link_issuer(self, accession: str, cik: int) -> None:
+        accession = _acc(accession)
         if self.get(accession) is None:
             raise NotFoundError(accession)
         with self.db.transaction() as cur:
@@ -302,7 +306,8 @@ class SqliteFilingRepository:
         return [
             int(r[0])
             for r in self.db.query(
-                "SELECT cik FROM filing_issuers WHERE accession = ? ORDER BY cik", (accession,)
+                "SELECT cik FROM filing_issuers WHERE accession = ? ORDER BY cik",
+                (_acc(accession),),
             )
         ]
 
@@ -351,7 +356,7 @@ class SqliteFilingDocumentRepository:
             self.db,
             FilingDocument,
             "SELECT payload FROM filing_documents WHERE accession = ? AND filename = ?",
-            (accession, filename),
+            (_acc(accession), filename),
         )
 
     def list_for_accession(self, accession: str) -> list[FilingDocument]:
@@ -359,7 +364,7 @@ class SqliteFilingDocumentRepository:
             self.db,
             FilingDocument,
             "SELECT payload FROM filing_documents WHERE accession = ?",
-            (accession,),
+            (_acc(accession),),
         )
         return sorted(docs, key=lambda d: (d.sequence is None, d.sequence or 0, d.filename))
 
@@ -397,7 +402,7 @@ class SqliteSnapshotRepository:
             self.db,
             SourceSnapshot,
             "SELECT payload FROM source_snapshots WHERE accession = ? ORDER BY snapshot_id",
-            (accession,),
+            (_acc(accession),),
         )
 
 

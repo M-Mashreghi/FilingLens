@@ -91,7 +91,7 @@ Resolve ticker, CIK, exchange, or company name into a canonical SEC filer withou
 
 ## Task 1.4 — Filing Identity, Availability & Immutable Provenance Model
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Make every filing and source payload auditable by accession, public-availability time, source, and hash.
@@ -107,10 +107,10 @@ Make every filing and source payload auditable by accession, public-availability
 
 **Definition of Done**
 
-- [ ] provenance/hash tests pass
-- [ ] future availability is excluded by `as_of` filters
-- [ ] amendment cannot overwrite original
-- [ ] accession/URL normalization round-trips
+- [x] provenance/hash tests pass
+- [x] future availability is excluded by `as_of` filters
+- [x] amendment cannot overwrite original
+- [x] accession/URL normalization round-trips
 
 ## Task 1.5 — Analysis Run Lifecycle & Reproducibility Manifest
 
@@ -994,11 +994,11 @@ Exercise production behavior under bounded concurrency and certify research inte
 
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
-| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 2 | 0 | 3 |
+| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 1 | 0 | 4 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 8 | 0 | 0 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **41** | **0** | **3** |
+| **Total** | **44 tasks** | **40** | **0** | **4** |

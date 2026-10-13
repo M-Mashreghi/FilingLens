@@ -113,13 +113,19 @@ def test_amendment_is_a_separate_filing(repos: SqliteRepositories) -> None:
 
 
 def test_documents_round_trip(repos: SqliteRepositories) -> None:
-    d1 = FilingDocument(accession="a-1", filename="ex99.htm", sequence=2, doc_type="EX-99.1")
+    d1 = FilingDocument(
+        accession="0000000001-24-000001", filename="ex99.htm", sequence=2, doc_type="EX-99.1"
+    )
     d0 = FilingDocument(
-        accession="a-1", filename="main.htm", sequence=1, doc_type="10-K", role="primary"
+        accession="0000000001-24-000001",
+        filename="main.htm",
+        sequence=1,
+        doc_type="10-K",
+        role="primary",
     )
     repos.documents.add(d1)
     repos.documents.add(d0)
-    assert repos.documents.list_for_accession("a-1") == [d0, d1]
+    assert repos.documents.list_for_accession("0000000001-24-000001") == [d0, d1]
     assert repos.documents.add(d0) == d0
 
 
@@ -134,7 +140,7 @@ def test_snapshot_is_never_overwritten(repos: SqliteRepositories) -> None:
         adapter="sec",
         adapter_version="1",
         storage_key=f"sha256/{digest}",
-        accession="a-1",
+        accession="0000000001-24-000001",
     )
     s2 = SourceSnapshot(
         snapshot_id=digest,
@@ -145,17 +151,21 @@ def test_snapshot_is_never_overwritten(repos: SqliteRepositories) -> None:
         adapter="sec",
         adapter_version="2",
         storage_key=f"sha256/{digest}",
-        accession="a-1",
+        accession="0000000001-24-000001",
     )
     repos.snapshots.add(s1)
     assert repos.snapshots.add(s2) == s1
     assert repos.snapshots.get(digest) == s1
-    assert repos.snapshots.list_for_accession("a-1") == [s1]
+    assert repos.snapshots.list_for_accession("0000000001-24-000001") == [s1]
 
 
 def test_run_finding_evidence_alert_report_round_trip(repos: SqliteRepositories) -> None:
     run = ComparisonRun(
-        run_id="r1", cik=320193, focal_accession="a-2", comparator_accession="a-1", as_of=T0
+        run_id="r1",
+        cik=320193,
+        focal_accession="0000000001-24-000002",
+        comparator_accession="0000000001-24-000001",
+        as_of=T0,
     )
     repos.runs.add(run)
     with pytest.raises(ConflictError):
@@ -169,7 +179,7 @@ def test_run_finding_evidence_alert_report_round_trip(repos: SqliteRepositories)
         evidence_id="e1",
         run_id="r1",
         snapshot_id="0" * 64,
-        accession="a-2",
+        accession="0000000001-24-000002",
         locator="block:12",
         text="Revenue increased",
         section="Item 7",

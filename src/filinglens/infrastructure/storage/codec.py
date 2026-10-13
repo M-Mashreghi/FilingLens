@@ -83,7 +83,7 @@ def from_jsonable(cls: type[T], data: dict[str, Any]) -> T:
     kwargs = {
         f.name: _decode(hints[f.name], data[f.name])
         for f in dataclasses.fields(cls)  # type: ignore[arg-type]
-        if f.name in data
+        if f.init and f.name in data
     }
     return cls(**kwargs)
 

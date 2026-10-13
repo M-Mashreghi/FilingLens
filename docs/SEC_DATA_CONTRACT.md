@@ -65,12 +65,21 @@ For research `as_of` logic:
 - never include a later amendment in a historical run before that amendment was public;
 - preserve source retrieval time separately from public availability.
 
+Implemented policy `availability/1` (`filinglens.domain.availability`):
+
+1. `available_at` = accepted/disseminated timestamp (UTC) when known (`accepted_timestamp` basis).
+2. Otherwise `available_at` = 23:59:59 America/New_York on the filing date (`filing_date_end_of_day_et` basis). EDGAR can assign a filing date after acceptance, so this fallback can only delay eligibility, never leak it.
+3. A source is eligible for a run iff `available_at <= as_of`; naive `as_of` values are rejected.
+
+`Filing.available_at` / `availability_basis` are derived fields, recomputed whenever a more precise timestamp is merged in.
+
 ## 7. Identity
 
 - CIK identifies the filer; tickers can change.
 - Accession number identifies the submission package.
 - An accession package can contain a primary filing, exhibits, XBRL files, graphics and the complete submission text.
 - Document-level identities are scoped to the accession package.
+- Accessions are stored in canonical dashed form `##########-YY-######`; the no-dash form is used in Archives paths: `https://www.sec.gov/Archives/edgar/data/{cik}/{accession-nodash}/{filename}`, with `index.json`, `{accession}-index.htm` and the complete submission `{accession}.txt` in the same directory (`filinglens.domain.accession`).
 
 ## 8. External References
 

@@ -6,10 +6,13 @@ Nullable fields are typed ``X | None`` and default to ``None`` only when genuine
 
 from __future__ import annotations
 
+import hashlib
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from enum import StrEnum
 
+from filinglens.domain.accession import normalize_accession
+from filinglens.domain.availability import AvailabilityBasis, compute_available_at
 from filinglens.domain.time import ensure_utc, ensure_utc_opt, utcnow
 
 
@@ -17,6 +20,10 @@ def _require(value: str, name: str) -> str:
     if not value or not value.strip():
         raise ValueError(f"{name} must be non-empty")
     return value
+
+
+def _norm_acc_opt(value: str | None) -> str | None:
+    return None if value is None else normalize_accession(value)
 
 
 def _check_cik(cik: int) -> int:
@@ -73,14 +80,30 @@ class Filing:
     is_amendment: bool = False
     amends_accession: str | None = None
     source: str = "unknown"
+    # Derived by the availability policy; never supplied by callers.
+    available_at: datetime = field(init=False)
+    availability_basis: AvailabilityBasis = field(init=False)
 
     def __post_init__(self) -> None:
-        _require(self.accession, "accession")
+        object.__setattr__(self, "accession", normalize_accession(self.accession))
+        object.__setattr__(self, "amends_accession", _norm_acc_opt(self.amends_accession))
         _check_cik(self.cik)
-        _require(self.form, "form")
+        object.__setattr__(self, "form", _require(self.form, "form").strip().upper())
         object.__setattr__(self, "accepted_at", ensure_utc_opt(self.accepted_at))
-        if self.form.upper().endswith("/A") and not self.is_amendment:
+        if self.form.endswith("/A") and not self.is_amendment:
             object.__setattr__(self, "is_amendment", True)
+        if self.amends_accession is not None:
+            if self.amends_accession == self.accession:
+                raise ValueError("a filing cannot amend itself")
+            if not self.is_amendment:
+                raise ValueError("amends_accession set on a non-amendment filing")
+        available_at, basis = compute_available_at(self.accepted_at, self.filing_date)
+        object.__setattr__(self, "available_at", available_at)
+        object.__setattr__(self, "availability_basis", basis)
+
+    @property
+    def base_form(self) -> str:
+        return self.form.removesuffix("/A")
 
 
 @dataclass(frozen=True, kw_only=True)
@@ -97,7 +120,7 @@ class FilingDocument:
     role: str = "unknown"  # primary | exhibit | xbrl | complete_submission | supporting | unknown
 
     def __post_init__(self) -> None:
-        _require(self.accession, "accession")
+        object.__setattr__(self, "accession", normalize_accession(self.accession))
         _require(self.filename, "filename")
 
 
@@ -117,11 +140,45 @@ class SourceSnapshot:
     filename: str | None = None
 
     def __post_init__(self) -> None:
-        if len(self.snapshot_id) != 64:
-            raise ValueError("snapshot_id must be a sha256 hex digest")
+        if len(self.snapshot_id) != 64 or any(
+            c not in "0123456789abcdef" for c in self.snapshot_id
+        ):
+            raise ValueError("snapshot_id must be a lowercase sha256 hex digest")
         if self.size_bytes < 0:
             raise ValueError("size_bytes must be >= 0")
+        object.__setattr__(self, "accession", _norm_acc_opt(self.accession))
         object.__setattr__(self, "retrieved_at", ensure_utc(self.retrieved_at))
+
+    @classmethod
+    def from_bytes(
+        cls,
+        data: bytes,
+        *,
+        source_url: str,
+        retrieved_at: datetime,
+        content_type: str | None,
+        adapter: str,
+        adapter_version: str,
+        accession: str | None = None,
+        filename: str | None = None,
+    ) -> SourceSnapshot:
+        digest = hashlib.sha256(data).hexdigest()
+        return cls(
+            snapshot_id=digest,
+            source_url=source_url,
+            retrieved_at=retrieved_at,
+            content_type=content_type,
+            size_bytes=len(data),
+            adapter=adapter,
+            adapter_version=adapter_version,
+            storage_key=f"sha256/{digest[:2]}/{digest}",
+            accession=accession,
+            filename=filename,
+        )
+
+    def verify(self, data: bytes) -> bool:
+        """True iff ``data`` are exactly the bytes this snapshot identifies."""
+        return len(data) == self.size_bytes and hashlib.sha256(data).hexdigest() == self.snapshot_id
 
 
 class RunState(StrEnum):
@@ -154,6 +211,8 @@ class ComparisonRun:
     def __post_init__(self) -> None:
         _require(self.run_id, "run_id")
         _check_cik(self.cik)
+        object.__setattr__(self, "focal_accession", _norm_acc_opt(self.focal_accession))
+        object.__setattr__(self, "comparator_accession", _norm_acc_opt(self.comparator_accession))
         for name in ("as_of", "created_at", "updated_at"):
             object.__setattr__(self, name, ensure_utc(getattr(self, name)))
 
@@ -174,6 +233,7 @@ class EvidenceSpan:
     def __post_init__(self) -> None:
         _require(self.evidence_id, "evidence_id")
         _require(self.locator, "locator")
+        object.__setattr__(self, "accession", normalize_accession(self.accession))
 
 
 @dataclass(frozen=True, kw_only=True)
