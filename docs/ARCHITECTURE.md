@@ -237,3 +237,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Scripts/styles/head/comments, link-only "Table of Contents" back-references and bare page numbers are dropped.
 - Content under `display:none`, `ix:header` or `ix:hidden` never becomes narrative; tagged hidden facts are returned as `HiddenFact`s. Visible `ix:*` wrappers are unwrapped.
 - Tables keep normalized rows: empty spacer cells removed, `$`/`(` merged into the following cell and `)`/`%` into the preceding one.
+
+### 10-K / 10-Q sections (Task 2.6)
+
+- `filinglens.parsing.sections.parse_sections` (`section-parser/1`) works on normalized blocks. Candidates are short, non-table blocks starting with `Item N[A-C]`, `Part I–IV` or `Signatures`; cross-references inside prose never qualify.
+- Table-of-contents candidates (tiny bodies followed by a later candidate for the same key) are dropped with a diagnostic. Every section ends at the next chosen item, part marker or signatures heading, so sections cannot swallow later items.
+- Status is `ok`, `ambiguous` (competing substantial headings, out-of-canonical-order, empty body; confidence ≤ 0.4) or `missing` (required item not found). 10-Q items are keyed `I-n` / `II-n`; when PART markers are absent the part is inferred from item-number restarts and confidence is reduced.
+- `SectionParseResult.analyst("risk_factors" | "mdna" | "market_risk" | "legal_proceedings" | "financial_statements" | "business")` maps analyst names to form-specific items.

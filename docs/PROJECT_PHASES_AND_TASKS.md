@@ -248,7 +248,7 @@ Convert filing markup into a stable document representation without losing locat
 
 ## Task 2.6 — 10-K / 10-Q Item & Section Parser
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Extract analyst-relevant 10-K and 10-Q sections with explicit boundary confidence.
@@ -263,9 +263,9 @@ Extract analyst-relevant 10-K and 10-Q sections with explicit boundary confidenc
 
 **Definition of Done**
 
-- [ ] multi-issuer/legacy fixture corpus passes target boundary metrics
-- [ ] Risk Factors and MD&A boundaries tested
-- [ ] ambiguous extraction does not silently succeed
+- [x] multi-issuer/legacy fixture corpus passes target boundary metrics
+- [x] Risk Factors and MD&A boundaries tested
+- [x] ambiguous extraction does not silently succeed
 
 ## Task 2.7 — 8-K Item & Exhibit Parser
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 3 | 0 | 5 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 2 | 0 | 6 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **34** | **0** | **10** |
+| **Total** | **44 tasks** | **33** | **0** | **11** |
