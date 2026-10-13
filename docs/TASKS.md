@@ -46,7 +46,7 @@ Update this file only after task verification.
 
 ## Phase 2 — SEC Ingestion & Filing Package Parsing
 
-- [ ] Task 2.1 — SEC Fair-Access HTTP Client & Rate Governor
+- [x] Task 2.1 — SEC Fair-Access HTTP Client & Rate Governor
 - [ ] Task 2.2 — SEC Submissions + Bulk Metadata Adapter
 - [ ] Task 2.3 — Filing Package Manifest & Attachment Inventory
 - [ ] Task 2.4 — Primary Filing & Analyst-Relevant Exhibit Retriever

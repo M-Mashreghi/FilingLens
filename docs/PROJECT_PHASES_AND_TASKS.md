@@ -138,7 +138,7 @@ Track analysis from request to reviewed report with legal transitions and a comp
 
 ## Task 2.1 — SEC Fair-Access HTTP Client & Rate Governor
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Centralize respectful SEC access so every adapter obeys identification, caching, concurrency, and rate limits.
@@ -154,10 +154,10 @@ Centralize respectful SEC access so every adapter obeys identification, caching,
 
 **Definition of Done**
 
-- [ ] tests prove configured request ceiling is never exceeded
-- [ ] 403/429/5xx/timeout paths are bounded
-- [ ] missing user-agent blocks live mode
-- [ ] no SEC adapter bypasses the governor
+- [x] tests prove configured request ceiling is never exceeded
+- [x] 403/429/5xx/timeout paths are bounded
+- [x] missing user-agent blocks live mode
+- [x] no SEC adapter bypasses the governor
 
 ## Task 2.2 — SEC Submissions + Bulk Metadata Adapter
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 8 | 0 | 0 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 7 | 0 | 1 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **39** | **0** | **5** |
+| **Total** | **44 tasks** | **38** | **0** | **6** |

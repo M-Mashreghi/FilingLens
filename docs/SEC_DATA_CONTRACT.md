@@ -38,6 +38,16 @@ SEC currently publishes a maximum automated request rate of **10 requests/second
 
 Live mode requires a descriptive configured User-Agent/contact. Do not evade rate controls or use anti-bot bypass behavior.
 
+Implementation (`filinglens.infrastructure.sec.client.SecHttpClient`, version `sec-http/1`):
+
+- the only module allowed to import an HTTP library (enforced by a test); hosts are restricted to `www.sec.gov`, `data.sec.gov`, `efts.sec.gov`;
+- live mode (`SEC_LIVE_MODE=true`) refuses to start without a `SEC_USER_AGENT` containing an e-mail or URL contact; offline mode refuses to start without an injected fixture transport;
+- `RateGovernor` (GCRA, burst 1) spaces requests at `1/SEC_MAX_RPS` (default 5/s; values above the published ceiling are rejected) and every retry passes through it; `SEC_MAX_CONCURRENCY` (default 2) bounds in-flight requests;
+- 429/5xx/timeouts/transport errors: at most `max_retries` (default 3) retries with capped exponential backoff and jitter; `Retry-After` honoured up to 60 s; then `SecUnavailableError`;
+- 403 → `SecForbiddenError` (never retried); 404 → `SecNotFoundError`;
+- HTTP cache (`FileHttpCache` under `FILINGLENS_CACHE_DIR/http`) with TTL and `ETag`/`Last-Modified` revalidation; it is a network optimisation, not provenance storage;
+- `SecMetrics` counts requests, network requests, cache hits/revalidations, retries, 429/403/5xx/transport errors and throttle wait time.
+
 ## 3. Browser Boundary
 
 `data.sec.gov` does not support CORS. The Streamlit/browser surface therefore should not directly fetch SEC APIs; the backend SEC adapter owns those calls.
