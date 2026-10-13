@@ -269,7 +269,7 @@ Extract analyst-relevant 10-K and 10-Q sections with explicit boundary confidenc
 
 ## Task 2.7 — 8-K Item & Exhibit Parser
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Treat 8-K as an event filing with item-specific and exhibit-aware intelligence.
@@ -284,10 +284,10 @@ Treat 8-K as an event filing with item-specific and exhibit-aware intelligence.
 
 **Definition of Done**
 
-- [ ] multi-item 8-K fixture parses correctly
-- [ ] exhibit references resolve to package manifest
-- [ ] missing exhibit is explicit
-- [ ] 8-K findings remain evidence-backed
+- [x] multi-item 8-K fixture parses correctly
+- [x] exhibit references resolve to package manifest
+- [x] missing exhibit is explicit
+- [x] 8-K findings remain evidence-backed
 
 ## Task 2.8 — Snapshot Deduplication, Cache & Source-Version Policy
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 2 | 0 | 6 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 1 | 0 | 7 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **33** | **0** | **11** |
+| **Total** | **44 tasks** | **32** | **0** | **12** |

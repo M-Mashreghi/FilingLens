@@ -52,7 +52,7 @@ Update this file only after task verification.
 - [x] Task 2.4 — Primary Filing & Analyst-Relevant Exhibit Retriever
 - [x] Task 2.5 — Filing HTML / Inline-XBRL Normalizer
 - [x] Task 2.6 — 10-K / 10-Q Item & Section Parser
-- [ ] Task 2.7 — 8-K Item & Exhibit Parser
+- [x] Task 2.7 — 8-K Item & Exhibit Parser
 - [ ] Task 2.8 — Snapshot Deduplication, Cache & Source-Version Policy
 
 ### Verification — Phase 2

@@ -244,3 +244,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Table-of-contents candidates (tiny bodies followed by a later candidate for the same key) are dropped with a diagnostic. Every section ends at the next chosen item, part marker or signatures heading, so sections cannot swallow later items.
 - Status is `ok`, `ambiguous` (competing substantial headings, out-of-canonical-order, empty body; confidence ≤ 0.4) or `missing` (required item not found). 10-Q items are keyed `I-n` / `II-n`; when PART markers are absent the part is inferred from item-number restarts and confidence is reduced.
 - `SectionParseResult.analyst("risk_factors" | "mdna" | "market_risk" | "legal_proceedings" | "financial_statements" | "business")` maps analyst names to form-specific items.
+
+### 8-K events (Task 2.7)
+
+- `filinglens.parsing.eight_k.parse_eight_k` (`eight-k-parser/1`) turns `Item X.YY` headings into `EightKEvent`s (text, evidence locators, category derived only from the SEC item number, e.g. 2.02 → `earnings`, 4.02 → `non_reliance`). Events stop at the next item or `SIGNATURES`.
+- Exhibit references come from the Item 9.01 exhibit table and `Exhibit NN.N` mentions; they resolve to package `EX-*` documents by numeric exhibit number (`99.1` = `EX-99.01`). Unresolved references are `missing` with a diagnostic; `101`/`104` cover-page XBRL entries are ignored.
+- Normalized exhibit documents (e.g. EX-99.1 earnings releases) can be passed in so their block locators become event evidence. The submissions `items` field is cross-checked and mismatches are reported.
