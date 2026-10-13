@@ -201,3 +201,11 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Migrations are forward-only, numbered, append-only and recorded in `schema_migrations`.
 - Accession identity: re-adding an accession with identical content is a no-op; `None` fields may be filled by later sources; any conflicting non-null value raises `ConflictError`. A filing discovered under a second CIK (co-registrant) is linked through `filing_issuers`, never duplicated.
 - Source snapshots are content-addressed by sha256 and never overwritten.
+
+### Issuer resolution (Task 1.3)
+
+- `filinglens.application.issuer_resolver.IssuerResolver` resolves CIK, ticker, `EXCHANGE:TICKER`, normalized legal name and aliases against a versioned `ReferenceDataset`.
+- Outcomes are `resolved`, `ambiguous` (ranked candidates) or `not_found`. Fuzzy name matches are never auto-resolved; a ticker or name mapping to several CIKs is ambiguous. Share classes of one CIK resolve to that CIK.
+- Every resolution carries the reference `source`, `source_version` (sha256 of the raw file) and `retrieved_at`; tickers are stored as `SecurityIdentifier` observations, never as durable identity.
+- `filinglens.infrastructure.sec.reference` parses SEC `company_tickers_exchange.json` / `company_tickers.json`; network access is injected (the governed SEC client in live mode). `ReferenceDataCache` applies a TTL and records loaded versions.
+- `filinglens.domain.identifiers.cik10()` produces zero-padded 10-digit CIKs for API paths; `parse_cik()` keeps the numeric form.

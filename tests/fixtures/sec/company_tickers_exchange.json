@@ -1,0 +1,14 @@
+{"fields":["cik","name","ticker","exchange"],"data":[
+[320193,"Apple Inc.","AAPL","Nasdaq"],
+[789019,"MICROSOFT CORP","MSFT","Nasdaq"],
+[1067983,"BERKSHIRE HATHAWAY INC","BRK-B","NYSE"],
+[1067983,"BERKSHIRE HATHAWAY INC","BRK-A","NYSE"],
+[1652044,"Alphabet Inc.","GOOGL","Nasdaq"],
+[1652044,"Alphabet Inc.","GOOG","Nasdaq"],
+[1018724,"AMAZON COM INC","AMZN","Nasdaq"],
+[1800001,"Delta Holdings Corp","DLT","NYSE"],
+[1800002,"Delta Holdings Inc","DLTH","Nasdaq"],
+[1800003,"Shared Ticker Trust A","SHR","NYSE"],
+[1800004,"Shared Ticker Trust B","SHR","OTC"],
+[1800005,"Debt Only Issuer LLC",null,null]
+]}

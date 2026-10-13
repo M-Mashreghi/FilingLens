@@ -70,7 +70,7 @@ Persist issuers, filing packages, snapshots, runs, findings, evidence, alerts, a
 
 ## Task 1.3 — Issuer / CIK / Ticker Resolver
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Resolve ticker, CIK, exchange, or company name into a canonical SEC filer without silently guessing.
@@ -85,9 +85,9 @@ Resolve ticker, CIK, exchange, or company name into a canonical SEC filer withou
 
 **Definition of Done**
 
-- [ ] ticker, CIK, name, alias, ambiguity fixtures pass
-- [ ] mapping source/version retained
-- [ ] ticker is never treated as permanent global identity
+- [x] ticker, CIK, name, alias, ambiguity fixtures pass
+- [x] mapping source/version retained
+- [x] ticker is never treated as permanent global identity
 
 ## Task 1.4 — Filing Identity, Availability & Immutable Provenance Model
 
@@ -994,11 +994,11 @@ Exercise production behavior under bounded concurrency and certify research inte
 
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
-| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 3 | 0 | 2 |
+| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 2 | 0 | 3 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 8 | 0 | 0 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **42** | **0** | **2** |
+| **Total** | **44 tasks** | **41** | **0** | **3** |

@@ -30,7 +30,7 @@ Update this file only after task verification.
 
 - [x] Task 1.1 — Python Project Scaffold & Quality Baseline
 - [x] Task 1.2 — Core Domain Models & SQLite Persistence
-- [ ] Task 1.3 — Issuer / CIK / Ticker Resolver
+- [x] Task 1.3 — Issuer / CIK / Ticker Resolver
 - [ ] Task 1.4 — Filing Identity, Availability & Immutable Provenance Model
 - [ ] Task 1.5 — Analysis Run Lifecycle & Reproducibility Manifest
 
