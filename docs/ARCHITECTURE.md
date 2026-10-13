@@ -284,3 +284,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Modified paragraphs carry sentence-level edits (abbreviation-aware splitter + sequence matching); unchanged sentences are not reported.
 - Tables are diffed by row label (first non-numeric cell): added/removed rows and per-column cell changes. Tables with duplicate row labels are marked `supported=False` with a reason instead of producing a guessed cell diff.
 - `SectionStat` reports old/new chars, length delta, word-level change magnitude (1 − sequence ratio) and change counts.
+
+### Change detectors (Task 3.5)
+
+- `filinglens.diff.detectors` (`detectors/1`) emits `ChangeSignal`s with topics, a language direction (`new`, `removed`, `strengthened`, `softened`, `unknown`), a reason and the old/new evidence of the source change.
+- Risk Factors: every substantive added/removed/modified block becomes a candidate; direction for modifications compares intensifier vs softener counts in the changed sentences and returns `unknown` for no or mixed signals.
+- MD&A/liquidity topics (demand, pricing, costs, margins, capex, liquidity, debt, customer/supplier concentration) and 8-K/exhibit topics (earnings, guidance, financing, acquisition/disposition, material agreement) come from versioned lexicons; 8-K signals carry primary and exhibit evidence locators.
+- Formatting-only edits (same alphanumeric content) and pure year roll-forwards are suppressed by detectors (the diff engine still records them).

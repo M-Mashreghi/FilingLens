@@ -406,7 +406,7 @@ Produce exact reviewable text/table changes before any LLM interpretation.
 
 ## Task 3.5 — Risk, MD&A, Liquidity & Exhibit Change Detectors
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Build analyst-focused change objects from high-value sections and filing exhibits.
@@ -420,10 +420,10 @@ Build analyst-focused change objects from high-value sections and filing exhibit
 
 **Definition of Done**
 
-- [ ] labeled risk/MD&A fixtures pass
-- [ ] exhibit evidence retained
-- [ ] formatting-only false positives controlled
-- [ ] unknown path explicit
+- [x] labeled risk/MD&A fixtures pass
+- [x] exhibit evidence retained
+- [x] formatting-only false positives controlled
+- [x] unknown path explicit
 
 ## Task 3.6 — Research Priority Feature Builder
 
@@ -996,9 +996,9 @@ Exercise production behavior under bounded concurrency and certify research inte
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
-| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 2 | 0 | 4 |
+| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 1 | 0 | 5 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **27** | **0** | **17** |
+| **Total** | **44 tasks** | **26** | **0** | **18** |
