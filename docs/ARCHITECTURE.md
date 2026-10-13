@@ -230,3 +230,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `FileSystemRawStore` (under `FILINGLENS_RAW_DIR`) is content-addressed (`sha256/<aa>/<digest>`), write-once (atomic temp-file rename, read-only file mode), verifies hashes on read and refuses to replace a corrupt object.
 - `DocumentRetriever` fetches the manifest's unique primary document plus exhibits selected by a versioned `ExhibitPolicy` (per-form document-type prefixes, `max_exhibits`, `max_bytes`, allowed content types). Exhibits are never promoted to primary; if no unique primary exists (or it fails) the complete submission text is used as an explicit, flagged fallback when configured.
 - A `SourceSnapshot` row is written only after bytes are stored and re-verified; failed, oversized or disallowed-type retrievals produce a `failed`/`skipped` outcome and no snapshot.
+
+### Normalization (Task 2.5)
+
+- `filinglens.parsing.normalizer.normalize_html` (`normalizer/1`, lxml) emits ordered `Block`s (`heading`, `paragraph`, `list_item`, `table`) with stable ids `blk-<index>-<sha256(kind|text)[:8]>`, an XPath locator (`#runN` suffix for loose text runs between block children), source line, whitespace-normalized `text` and raw `original_text`.
+- Scripts/styles/head/comments, link-only "Table of Contents" back-references and bare page numbers are dropped.
+- Content under `display:none`, `ix:header` or `ix:hidden` never becomes narrative; tagged hidden facts are returned as `HiddenFact`s. Visible `ix:*` wrappers are unwrapped.
+- Tables keep normalized rows: empty spacer cells removed, `$`/`(` merged into the following cell and `)`/`%` into the preceding one.

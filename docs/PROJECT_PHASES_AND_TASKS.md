@@ -226,7 +226,7 @@ Fetch the correct primary document and selected exhibits while keeping raw bytes
 
 ## Task 2.5 — Filing HTML / Inline-XBRL Normalizer
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Convert filing markup into a stable document representation without losing locators or visible text.
@@ -241,10 +241,10 @@ Convert filing markup into a stable document representation without losing locat
 
 **Definition of Done**
 
-- [ ] deterministic normalization fixtures pass
-- [ ] visible text preserved
-- [ ] locators survive normalization
-- [ ] hidden iXBRL is not misrepresented as visible narrative
+- [x] deterministic normalization fixtures pass
+- [x] visible text preserved
+- [x] locators survive normalization
+- [x] hidden iXBRL is not misrepresented as visible narrative
 
 ## Task 2.6 — 10-K / 10-Q Item & Section Parser
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 4 | 0 | 4 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 3 | 0 | 5 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **35** | **0** | **9** |
+| **Total** | **44 tasks** | **34** | **0** | **10** |
