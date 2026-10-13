@@ -203,7 +203,7 @@ Model the complete accession package instead of assuming one HTML file contains 
 
 ## Task 2.4 — Primary Filing & Analyst-Relevant Exhibit Retriever
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Fetch the correct primary document and selected exhibits while keeping raw bytes immutable.
@@ -219,10 +219,10 @@ Fetch the correct primary document and selected exhibits while keeping raw bytes
 
 **Definition of Done**
 
-- [ ] primary-vs-exhibit selection fixtures pass
-- [ ] raw byte hash stable
-- [ ] failed retrieval cannot create a completed snapshot
-- [ ] exhibit selection is configuration/policy driven
+- [x] primary-vs-exhibit selection fixtures pass
+- [x] raw byte hash stable
+- [x] failed retrieval cannot create a completed snapshot
+- [x] exhibit selection is configuration/policy driven
 
 ## Task 2.5 — Filing HTML / Inline-XBRL Normalizer
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 5 | 0 | 3 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 4 | 0 | 4 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **36** | **0** | **8** |
+| **Total** | **44 tasks** | **35** | **0** | **9** |

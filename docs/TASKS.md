@@ -49,7 +49,7 @@ Update this file only after task verification.
 - [x] Task 2.1 — SEC Fair-Access HTTP Client & Rate Governor
 - [x] Task 2.2 — SEC Submissions + Bulk Metadata Adapter
 - [x] Task 2.3 — Filing Package Manifest & Attachment Inventory
-- [ ] Task 2.4 — Primary Filing & Analyst-Relevant Exhibit Retriever
+- [x] Task 2.4 — Primary Filing & Analyst-Relevant Exhibit Retriever
 - [ ] Task 2.5 — Filing HTML / Inline-XBRL Normalizer
 - [ ] Task 2.6 — 10-K / 10-Q Item & Section Parser
 - [ ] Task 2.7 — 8-K Item & Exhibit Parser

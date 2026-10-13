@@ -224,3 +224,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `RunManifest` (table `run_manifests`) records `as_of`, focal/comparator accessions and reason, snapshot ids, XBRL fact ids, component versions (`parser`, `diff`, `calculation`, `comparator_policy`, `availability_policy`; plus `llm_provider`, `llm_model`, `prompt`, `output_schema` when an LLM is used) and a config fingerprint.
 - `RunService.transition(..., COMPLETED)` is refused unless `verify_manifest` finds every snapshot in the store, every evidence span citing a recorded snapshot and all required versions present.
 - Completed runs are immutable (service and repository guards). `RunService.supersede` creates a new run linked through `supersedes_run_id`.
+
+### Raw snapshots & document retrieval (Task 2.4)
+
+- `FileSystemRawStore` (under `FILINGLENS_RAW_DIR`) is content-addressed (`sha256/<aa>/<digest>`), write-once (atomic temp-file rename, read-only file mode), verifies hashes on read and refuses to replace a corrupt object.
+- `DocumentRetriever` fetches the manifest's unique primary document plus exhibits selected by a versioned `ExhibitPolicy` (per-form document-type prefixes, `max_exhibits`, `max_bytes`, allowed content types). Exhibits are never promoted to primary; if no unique primary exists (or it fails) the complete submission text is used as an explicit, flagged fallback when configured.
+- A `SourceSnapshot` row is written only after bytes are stored and re-verified; failed, oversized or disallowed-type retrievals produce a `failed`/`skipped` outcome and no snapshot.
