@@ -450,7 +450,7 @@ Each feature has a documented range, meaning and version.
 
 ## Task 4.1 — SEC Company Facts Adapter
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Retrieve standardized entity-wide XBRL facts efficiently from official SEC APIs.
@@ -464,10 +464,10 @@ Retrieve standardized entity-wide XBRL facts efficiently from official SEC APIs.
 
 **Definition of Done**
 
-- [ ] fixture parsing passes
-- [ ] bulk/per-company canonical outputs reconcile
-- [ ] missing concept is explicit
-- [ ] no API key required for official public path
+- [x] fixture parsing passes
+- [x] bulk/per-company canonical outputs reconcile
+- [x] missing concept is explicit
+- [x] no API key required for official public path
 
 ## Task 4.2 — Direct Filing iXBRL Fact Extractor
 
@@ -997,8 +997,8 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
-| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
+| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 6 | 0 | 1 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **25** | **0** | **19** |
+| **Total** | **44 tasks** | **24** | **0** | **20** |

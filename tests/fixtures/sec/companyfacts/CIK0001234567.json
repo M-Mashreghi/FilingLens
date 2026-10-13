@@ -1,0 +1,15 @@
+{"cik":1234567,"entityName":"Example Devices Inc.","facts":{
+"dei":{"EntityCommonStockSharesOutstanding":{"label":"Entity Common Stock, Shares Outstanding","units":{"shares":[
+ {"end":"2024-10-18","val":15115823000,"accn":"0001234567-24-000031","fy":2024,"fp":"FY","form":"10-K","filed":"2024-11-01","frame":"CY2024Q3I"}]}}},
+"us-gaap":{
+ "Revenues":{"label":"Revenues","units":{"USD":[
+  {"start":"2022-09-25","end":"2023-09-30","val":383285000000,"accn":"0001234567-23-000030","fy":2023,"fp":"FY","form":"10-K","filed":"2023-11-03","frame":"CY2023"},
+  {"start":"2022-09-25","end":"2023-09-30","val":383285000000,"accn":"0001234567-24-000031","fy":2024,"fp":"FY","form":"10-K","filed":"2024-11-01"},
+  {"start":"2023-10-01","end":"2024-09-28","val":391035000000,"accn":"0001234567-24-000031","fy":2024,"fp":"FY","form":"10-K","filed":"2024-11-01","frame":"CY2024"},
+  {"start":"2023-10-01","end":"2023-12-30","val":119575000000,"accn":"0001234567-24-000005","fy":2024,"fp":"Q1","form":"10-Q","filed":"2024-02-02","frame":"CY2023Q4"}]}},
+ "CashAndCashEquivalentsAtCarryingValue":{"label":"Cash and Cash Equivalents","units":{"USD":[
+  {"end":"2023-09-30","val":29965000000,"accn":"0001234567-23-000030","fy":2023,"fp":"FY","form":"10-K","filed":"2023-11-03","frame":"CY2023Q3I"},
+  {"end":"2024-09-28","val":29943000000,"accn":"0001234567-24-000031","fy":2024,"fp":"FY","form":"10-K","filed":"2024-11-01","frame":"CY2024Q3I"}]}},
+ "EarningsPerShareDiluted":{"label":"EPS Diluted","units":{"USD/shares":[
+  {"start":"2023-10-01","end":"2024-09-28","val":6.08,"accn":"0001234567-24-000031","fy":2024,"fp":"FY","form":"10-K","filed":"2024-11-01","frame":"CY2024"}]}}
+}}}

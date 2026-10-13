@@ -76,6 +76,8 @@ Therefore:
 - It is **not** treated as a complete representation of every filing-specific fact.
 - Filing-specific iXBRL extraction is required for custom concepts, dimensions and context-sensitive analysis.
 
+Implementation (`filinglens.infrastructure.sec.companyfacts`, `sec-companyfacts/1`): `CompanyFactsAdapter` (governed client, no API key) and `BulkCompanyFactsArchive` produce identical `XbrlFact` sets (`filinglens.domain.xbrl`, source `companyfacts`) preserving prefix/concept, label, unit, start/end (instant when no start), accession, form, fy/fp, filed date and frame. `CompanyFacts.lookup` returns `missing_concept` / `missing_unit` explicitly. Fact ids are content hashes, so a value re-reported in a later accession is a distinct fact.
+
 ## 5. Taxonomy Versioning
 
 SEC-supported XBRL taxonomies change over time. FilingLens stores taxonomy namespace/version and versions its canonical concept mappings. A newly supported taxonomy version must not silently change historical metric semantics.

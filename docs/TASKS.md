@@ -86,7 +86,7 @@ Update this file only after task verification.
 
 ## Phase 4 — XBRL & Deterministic Financial Signals
 
-- [ ] Task 4.1 — SEC Company Facts Adapter
+- [x] Task 4.1 — SEC Company Facts Adapter
 - [ ] Task 4.2 — Direct Filing iXBRL Fact Extractor
 - [ ] Task 4.3 — XBRL Context, Unit, Dimension & Period Normalizer
 - [ ] Task 4.4 — Taxonomy / Concept Mapping & Version-Drift Layer
