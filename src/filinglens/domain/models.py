@@ -80,6 +80,10 @@ class Filing:
     is_amendment: bool = False
     amends_accession: str | None = None
     source: str = "unknown"
+    items: tuple[str, ...] | None = None  # 8-K item numbers as published, e.g. ("2.02", "9.01")
+    primary_doc_description: str | None = None
+    is_xbrl: bool | None = None
+    is_inline_xbrl: bool | None = None
     # Derived by the availability policy; never supplied by callers.
     available_at: datetime = field(init=False)
     availability_basis: AvailabilityBasis = field(init=False)

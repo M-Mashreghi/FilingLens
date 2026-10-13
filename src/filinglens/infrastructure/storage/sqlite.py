@@ -13,6 +13,7 @@ import sqlite3
 import threading
 from collections.abc import Iterator, Sequence
 from contextlib import contextmanager
+from datetime import datetime
 from pathlib import Path
 from typing import Any, TypeVar
 
@@ -93,6 +94,16 @@ MIGRATIONS: list[tuple[int, str]] = [
         """
         CREATE TABLE run_manifests (
             run_id TEXT PRIMARY KEY REFERENCES runs(run_id), payload TEXT NOT NULL
+        );
+        """,
+    ),
+    (
+        3,
+        """
+        CREATE TABLE filing_observations (
+            accession TEXT NOT NULL REFERENCES filings(accession),
+            source TEXT NOT NULL, source_version TEXT NOT NULL, observed_at TEXT NOT NULL,
+            PRIMARY KEY (accession, source, source_version)
         );
         """,
     ),
@@ -311,6 +322,25 @@ class SqliteFilingRepository:
                 "INSERT OR IGNORE INTO filing_issuers (accession, cik) VALUES (?, ?)",
                 (accession, cik),
             )
+
+    def record_observation(
+        self, accession: str, source: str, source_version: str, observed_at: datetime
+    ) -> None:
+        with self.db.transaction() as cur:
+            cur.execute(
+                "INSERT OR IGNORE INTO filing_observations VALUES (?, ?, ?, ?)",
+                (_acc(accession), source, source_version, observed_at.isoformat()),
+            )
+
+    def observations(self, accession: str) -> list[tuple[str, str, datetime]]:
+        return [
+            (r[0], r[1], datetime.fromisoformat(r[2]))
+            for r in self.db.query(
+                "SELECT source, source_version, observed_at FROM filing_observations "
+                "WHERE accession = ? ORDER BY observed_at, source",
+                (_acc(accession),),
+            )
+        ]
 
     def ciks_for(self, accession: str) -> list[int]:
         return [

@@ -16,6 +16,14 @@ Historical bulk bootstrap:
 
 `https://www.sec.gov/Archives/edgar/daily-index/bulkdata/submissions.zip`
 
+Implementation (`filinglens.infrastructure.sec.submissions`, `sec-submissions/1`):
+
+- `SubmissionsAdapter` fetches `CIK##########.json` and every history page listed in `filings.files` through the governed client. History pages hold the same columnar arrays at top level; mismatched column lengths are rejected.
+- `BulkSubmissionsArchive` reads a locally downloaded `submissions.zip`; per-company and bulk paths produce identical `Filing` identities (verified by test) and both are recorded in `filing_observations` with their sha256 dataset version.
+- **`acceptanceDateTime` quirk:** the value carries a `Z` suffix but is EDGAR acceptance time in US Eastern time (e.g. an after-17:30 acceptance on day D receives filing date D+1). FilingLens reads it as America/New_York, which is also the conservative point-in-time choice (a later UTC instant than reading it as UTC).
+- 8-K `items`, `primaryDocDescription`, `isXBRL` and `isInlineXBRL` are preserved on `Filing`.
+- `FilingMetadataService.filings_as_of` is the point-in-time view (`available_at <= as_of`).
+
 ### XBRL aggregate facts
 
 Per-company standardized facts:

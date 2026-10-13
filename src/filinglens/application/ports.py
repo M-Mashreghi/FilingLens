@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from typing import Protocol
 
 from filinglens.domain.models import (
@@ -40,6 +41,10 @@ class FilingRepository(Protocol):
     def list_for_cik(self, cik: int) -> list[Filing]: ...
     def link_issuer(self, accession: str, cik: int) -> None: ...
     def ciks_for(self, accession: str) -> list[int]: ...
+    def record_observation(
+        self, accession: str, source: str, source_version: str, observed_at: datetime
+    ) -> None: ...
+    def observations(self, accession: str) -> list[tuple[str, str, datetime]]: ...
 
 
 class FilingDocumentRepository(Protocol):

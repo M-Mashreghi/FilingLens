@@ -161,7 +161,7 @@ Centralize respectful SEC access so every adapter obeys identification, caching,
 
 ## Task 2.2 — SEC Submissions + Bulk Metadata Adapter
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Discover filing history efficiently for both interactive use and historical bootstrap.
@@ -176,9 +176,9 @@ Discover filing history efficiently for both interactive use and historical boot
 
 **Definition of Done**
 
-- [ ] recent + historical metadata fixtures parse
-- [ ] bulk and per-company paths converge to same canonical identity
-- [ ] no future filing enters an `as_of` view
+- [x] recent + historical metadata fixtures parse
+- [x] bulk and per-company paths converge to same canonical identity
+- [x] no future filing enters an `as_of` view
 
 ## Task 2.3 — Filing Package Manifest & Attachment Inventory
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 7 | 0 | 1 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 6 | 0 | 2 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **38** | **0** | **6** |
+| **Total** | **44 tasks** | **37** | **0** | **7** |
