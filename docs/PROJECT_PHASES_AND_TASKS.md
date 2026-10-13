@@ -114,7 +114,7 @@ Make every filing and source payload auditable by accession, public-availability
 
 ## Task 1.5 — Analysis Run Lifecycle & Reproducibility Manifest
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Track analysis from request to reviewed report with legal transitions and a complete reproducibility manifest.
@@ -128,9 +128,9 @@ Track analysis from request to reviewed report with legal transitions and a comp
 
 **Definition of Done**
 
-- [ ] transition matrix tests pass
-- [ ] completed run mutation is blocked
-- [ ] manifest is sufficient to reproduce all referenced evidence and calculations
+- [x] transition matrix tests pass
+- [x] completed run mutation is blocked
+- [x] manifest is sufficient to reproduce all referenced evidence and calculations
 
 ---
 
@@ -994,11 +994,11 @@ Exercise production behavior under bounded concurrency and certify research inte
 
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
-| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 1 | 0 | 4 |
+| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 8 | 0 | 0 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **40** | **0** | **4** |
+| **Total** | **44 tasks** | **39** | **0** | **5** |

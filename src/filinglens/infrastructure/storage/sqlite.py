@@ -17,7 +17,7 @@ from pathlib import Path
 from typing import Any, TypeVar
 
 from filinglens.domain.accession import normalize_accession as _acc
-from filinglens.domain.errors import ConflictError, NotFoundError
+from filinglens.domain.errors import ConflictError, ImmutabilityError, NotFoundError
 from filinglens.domain.models import (
     Alert,
     ComparisonRun,
@@ -27,9 +27,11 @@ from filinglens.domain.models import (
     Finding,
     Issuer,
     Report,
+    RunState,
     SecurityIdentifier,
     SourceSnapshot,
 )
+from filinglens.domain.run_lifecycle import RunManifest
 from filinglens.domain.time import utcnow
 from filinglens.infrastructure.storage.codec import dumps, loads
 
@@ -83,6 +85,14 @@ MIGRATIONS: list[tuple[int, str]] = [
         CREATE TABLE reports (
             report_id TEXT PRIMARY KEY, run_id TEXT NOT NULL, version INTEGER NOT NULL,
             payload TEXT NOT NULL, UNIQUE (run_id, version)
+        );
+        """,
+    ),
+    (
+        2,
+        """
+        CREATE TABLE run_manifests (
+            run_id TEXT PRIMARY KEY REFERENCES runs(run_id), payload TEXT NOT NULL
         );
         """,
     ),
@@ -425,14 +435,37 @@ class SqliteRunRepository:
         return _one(self.db, ComparisonRun, "SELECT payload FROM runs WHERE run_id = ?", (run_id,))
 
     def save(self, run: ComparisonRun) -> ComparisonRun:
+        """Persist a changed run. Completed runs are immutable."""
         with self.db.transaction() as cur:
-            updated = cur.execute(
+            self._assert_mutable(cur, run.run_id)
+            cur.execute(
                 "UPDATE runs SET state = ?, payload = ? WHERE run_id = ?",
                 (run.state.value, dumps(run), run.run_id),
-            ).rowcount
-            if updated == 0:
-                raise NotFoundError(run.run_id)
+            )
         return run
+
+    def save_manifest(self, manifest: RunManifest) -> RunManifest:
+        with self.db.transaction() as cur:
+            self._assert_mutable(cur, manifest.run_id)
+            cur.execute(
+                "INSERT INTO run_manifests (run_id, payload) VALUES (?, ?) "
+                "ON CONFLICT(run_id) DO UPDATE SET payload = excluded.payload",
+                (manifest.run_id, dumps(manifest)),
+            )
+        return manifest
+
+    def get_manifest(self, run_id: str) -> RunManifest | None:
+        return _one(
+            self.db, RunManifest, "SELECT payload FROM run_manifests WHERE run_id = ?", (run_id,)
+        )
+
+    @staticmethod
+    def _assert_mutable(cur: sqlite3.Cursor, run_id: str) -> None:
+        row = cur.execute("SELECT state FROM runs WHERE run_id = ?", (run_id,)).fetchone()
+        if row is None:
+            raise NotFoundError(run_id)
+        if row[0] == RunState.COMPLETED.value:
+            raise ImmutabilityError(f"run {run_id} is completed and immutable")
 
     def list(self) -> list[ComparisonRun]:
         return _rows(self.db, ComparisonRun, "SELECT payload FROM runs ORDER BY run_id")

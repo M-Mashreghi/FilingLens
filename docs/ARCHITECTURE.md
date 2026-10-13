@@ -217,3 +217,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `Filing.available_at` follows the `availability/1` policy documented in `SEC_DATA_CONTRACT.md` §6; `filter_as_of` applies it.
 - Amendments are distinct accessions with `is_amendment` and an optional `amends_accession` (never self-referential); an attempt to re-label an existing accession is a `ConflictError`.
 - `SourceSnapshot.from_bytes` captures sha256, size, content type, retrieval time and adapter/version; `verify()` re-checks bytes. Snapshot ids are never overwritten.
+
+### Run lifecycle (Task 1.5)
+
+- `filinglens.domain.run_lifecycle.TRANSITIONS` is the authoritative state machine: the work chain `Created → Resolving → Collecting → Parsing → Aligning → Analyzing → Reviewing → Completed`, with `NeedsInput` (resume into any work state), `BlockedBySource` (resume to Resolving/Collecting), `Reviewing → Analyzing` (reviewer send-back) and `Failed` (requires an error). `Completed` and `Failed` are terminal.
+- `RunManifest` (table `run_manifests`) records `as_of`, focal/comparator accessions and reason, snapshot ids, XBRL fact ids, component versions (`parser`, `diff`, `calculation`, `comparator_policy`, `availability_policy`; plus `llm_provider`, `llm_model`, `prompt`, `output_schema` when an LLM is used) and a config fingerprint.
+- `RunService.transition(..., COMPLETED)` is refused unless `verify_manifest` finds every snapshot in the store, every evidence span citing a recorded snapshot and all required versions present.
+- Completed runs are immutable (service and repository guards). `RunService.supersede` creates a new run linked through `supersedes_run_id`.

@@ -32,17 +32,17 @@ Update this file only after task verification.
 - [x] Task 1.2 — Core Domain Models & SQLite Persistence
 - [x] Task 1.3 — Issuer / CIK / Ticker Resolver
 - [x] Task 1.4 — Filing Identity, Availability & Immutable Provenance Model
-- [ ] Task 1.5 — Analysis Run Lifecycle & Reproducibility Manifest
+- [x] Task 1.5 — Analysis Run Lifecycle & Reproducibility Manifest
 
 ### Verification — Phase 1
 
 | Item | Detail |
 |---|---|
-| Status | Not Started |
-| Tests | — |
-| Evaluation | — |
-| Docs | — |
-| Notes | — |
+| Status | Completed (2026-10-13) |
+| Tests | `uv run pytest` — 199 passed (unit + integration); ruff + mypy strict green |
+| Evaluation | Identity fixtures: ticker/CIK/name/alias/ambiguity, accession round-trip, availability policy |
+| Docs | ARCHITECTURE §14, SEC_DATA_CONTRACT §6–7, README development commands |
+| Notes | Run manifest stored in `run_manifests` (migration 2); completed runs immutable at service and repository level |
 
 ## Phase 2 — SEC Ingestion & Filing Package Parsing
 

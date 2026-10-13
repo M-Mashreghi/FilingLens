@@ -23,7 +23,7 @@ from filinglens.domain.models import (
     SecurityIdentifier,
     SourceSnapshot,
 )
-from filinglens.infrastructure.storage.sqlite import Database, SqliteRepositories
+from filinglens.infrastructure.storage.sqlite import MIGRATIONS, Database, SqliteRepositories
 
 T0 = datetime(2024, 11, 1, 18, 1, 36, tzinfo=UTC)
 SRC = Path(__file__).resolve().parents[2] / "src" / "filinglens"
@@ -255,10 +255,10 @@ def test_file_database_migrations_are_idempotent(tmp_path: Path) -> None:
     path = tmp_path / "sub" / "fl.db"
     db = Database(path)
     SqliteRepositories(db).filings.add(_filing())
-    assert db.schema_version == 1
+    assert db.schema_version == MIGRATIONS[-1][0]
     db.close()
     db2 = Database(path)
-    assert db2.schema_version == 1
+    assert db2.schema_version == MIGRATIONS[-1][0]
     assert SqliteRepositories(db2).filings.get("0000320193-24-000123") is not None
     db2.close()
 
