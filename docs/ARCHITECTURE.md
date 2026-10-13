@@ -264,3 +264,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Eligibility is `available_at <= as_of`; a focal filing not yet public raises. Excluded candidates and reasons are returned.
 - Amendments: `AmendmentPolicy.ORIGINAL` (default) compares against the original filing of the chosen period; `LATEST_AVAILABLE` uses the newest amendment public by `as_of` (flagged as possibly partial). A focal amendment is compared to the prior period like its base form.
 - `application.comparison.record_comparator` persists comparator accession, reason (mode, policy, notes) and policy version into the run manifest.
+
+### Amendment & restatement lineage (Task 3.2)
+
+- `filinglens.lineage.amendments` (`lineage/1`): `link_amendment` uses an explicit `amends_accession`, else the unique earlier original with the same base form and report period (confidence 0.95). Multiple candidates or none leave the amendment unlinked with ranked candidates — no guessing.
+- `LineageEngine.period(base, as_of)` returns original, amendments public at `as_of` and the `effective` version; before an amendment's `available_at` the original state is returned.
+- `restatement_signals(as_of)` surfaces 8-K Item 4.02 non-reliance filings and 10-K/A / 10-Q/A amendments with neutral wording.
+- Amendment-vs-original (`amendment_only_changes`, by block fingerprint) and effective-vs-prior-period (comparator policy) are separate lenses.

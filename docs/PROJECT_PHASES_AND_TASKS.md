@@ -340,7 +340,7 @@ Choose economically defensible baselines using form, fiscal period, amendment li
 
 ## Task 3.2 — Amendment, Restatement & Filing Lineage Engine
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Track 10-K/A, 10-Q/A and related non-reliance/restatement signals as explicit lineage rather than overwriting history.
@@ -355,10 +355,10 @@ Track 10-K/A, 10-Q/A and related non-reliance/restatement signals as explicit li
 
 **Definition of Done**
 
-- [ ] original and amendment remain separately queryable
-- [ ] lineage fixtures pass
-- [ ] amendment-only changes can be isolated
-- [ ] historical `as_of` before amendment returns original state
+- [x] original and amendment remain separately queryable
+- [x] lineage fixtures pass
+- [x] amendment-only changes can be isolated
+- [x] historical `as_of` before amendment returns original state
 
 ## Task 3.3 — Section Alignment Engine
 
@@ -996,9 +996,9 @@ Exercise production behavior under bounded concurrency and certify research inte
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
-| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 5 | 0 | 1 |
+| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 4 | 0 | 2 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **30** | **0** | **14** |
+| **Total** | **44 tasks** | **29** | **0** | **15** |
