@@ -72,17 +72,17 @@ Update this file only after task verification.
 - [x] Task 3.3 — Section Alignment Engine
 - [x] Task 3.4 — Deterministic Text & Table Diff Engine
 - [x] Task 3.5 — Risk, MD&A, Liquidity & Exhibit Change Detectors
-- [ ] Task 3.6 — Research Priority Feature Builder
+- [x] Task 3.6 — Research Priority Feature Builder
 
 ### Verification — Phase 3
 
 | Item | Detail |
 |---|---|
-| Status | Not Started |
-| Tests | — |
-| Evaluation | — |
-| Docs | — |
-| Notes | — |
+| Status | Completed (2026-10-13) |
+| Tests | `uv run pytest` — 359 passed; ruff + mypy strict green |
+| Evaluation | Comparator matrix incl. 52/53-week, sequential, amendment and no-leakage cases; reorder/boilerplate/cross-section alignment fixtures; text/table diff fixtures; labeled detector fixtures |
+| Docs | ARCHITECTURE §14 |
+| Notes | Diff/detectors/features have no LLM dependency; features never encode legal materiality |
 
 ## Phase 4 — XBRL & Deterministic Financial Signals
 

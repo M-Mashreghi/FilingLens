@@ -291,3 +291,8 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Risk Factors: every substantive added/removed/modified block becomes a candidate; direction for modifications compares intensifier vs softener counts in the changed sentences and returns `unknown` for no or mixed signals.
 - MD&A/liquidity topics (demand, pricing, costs, margins, capex, liquidity, debt, customer/supplier concentration) and 8-K/exhibit topics (earnings, guidance, financing, acquisition/disposition, material agreement) come from versioned lexicons; 8-K signals carry primary and exhibit evidence locators.
 - Formatting-only edits (same alphanumeric content) and pure year roll-forwards are suppressed by detectors (the diff engine still records them).
+
+### Research priority features (Task 3.6)
+
+- `filinglens.diff.priority_features.build_features` (`priority-features/1`) turns each `ChangeSignal` into a `FeatureVector` whose features are listed with range and meaning in `FEATURE_SPECS`: section importance, novelty, change magnitude, topic breadth, direction score, amendment/restatement flags, exhibit weight, cross-section recurrence, related XBRL signal, parser confidence, alignment confidence and evidence quality.
+- All values are in [0, 1]; a feature that cannot be computed is `None` (missing is not zero). Vectors are deterministic and carry explanations. Features rank analyst attention only and never encode legal materiality.
