@@ -182,7 +182,7 @@ Discover filing history efficiently for both interactive use and historical boot
 
 ## Task 2.3 — Filing Package Manifest & Attachment Inventory
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Model the complete accession package instead of assuming one HTML file contains all economically relevant information.
@@ -197,9 +197,9 @@ Model the complete accession package instead of assuming one HTML file contains 
 
 **Definition of Done**
 
-- [ ] package fixture with primary + exhibits + XBRL inventories correctly
-- [ ] unknown attachments retained
-- [ ] manifest links all documents to the accession
+- [x] package fixture with primary + exhibits + XBRL inventories correctly
+- [x] unknown attachments retained
+- [x] manifest links all documents to the accession
 
 ## Task 2.4 — Primary Filing & Analyst-Relevant Exhibit Retriever
 
@@ -995,10 +995,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
-| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 6 | 0 | 2 |
+| 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 5 | 0 | 3 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **37** | **0** | **7** |
+| **Total** | **44 tasks** | **36** | **0** | **8** |

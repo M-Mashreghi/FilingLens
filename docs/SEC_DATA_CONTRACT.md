@@ -40,6 +40,12 @@ Historical bulk bootstrap:
 
 Filing content lives under the SEC Archives accession directory. Directory trees expose machine-readable `index.json` / `index.xml` in addition to HTML directory views. Filing detail/index pages identify the primary document and exhibit/data files.
 
+Implementation (`filinglens.infrastructure.sec.package`, `sec-package/1`; classifier `package-classifier/1` in `filinglens.domain.package`):
+
+- `index.json` supplies the complete file inventory (name, size); `{accession}-index.htm` (`table.tableFile` rows) supplies Seq/Description/Type. Files are merged by filename and a file present in only one source is kept.
+- Roles: `primary` (the submissions `primaryDocument`, else Seq 1 whose Type equals the form), `exhibit` (`EX-*` except `EX-101*`), `xbrl` (`EX-101*`, `.xsd`, linkbases, extracted `_htm.xml`, `FilingSummary.xml`, `MetaLinks.json`), `complete_submission` (`{accession}.txt`), `index`, `supporting` (graphics, `R*.htm` renderings, `Financial_Report.xlsx`) and `unknown` (retained, never dropped).
+- Document identity is `(accession, filename)`; `PackageManifest` rejects documents from another accession or duplicate filenames.
+
 ## 2. Fair Access
 
 SEC currently publishes a maximum automated request rate of **10 requests/second**. FilingLens should default to a lower configurable rate, use bounded concurrency/cache/backoff, and treat the SEC-published ceiling as an external policy that may change.
