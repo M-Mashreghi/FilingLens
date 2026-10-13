@@ -49,7 +49,7 @@ Create a clean Python project with stable module boundaries, configuration, logg
 
 ## Task 1.2 — Core Domain Models & SQLite Persistence
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Persist issuers, filing packages, snapshots, runs, findings, evidence, alerts, and reports without coupling domain logic to SQLite.
@@ -64,9 +64,9 @@ Persist issuers, filing packages, snapshots, runs, findings, evidence, alerts, a
 
 **Definition of Done**
 
-- [ ] round-trip integration tests pass
-- [ ] duplicate accession handled idempotently
-- [ ] domain imports do not depend on FastAPI/Streamlit/SQLite implementation
+- [x] round-trip integration tests pass
+- [x] duplicate accession handled idempotently
+- [x] domain imports do not depend on FastAPI/Streamlit/SQLite implementation
 
 ## Task 1.3 — Issuer / CIK / Ticker Resolver
 
@@ -994,11 +994,11 @@ Exercise production behavior under bounded concurrency and certify research inte
 
 | Phase | Tasks | Not Started | In Progress | Completed |
 |---|---|---:|---:|---:|
-| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 4 | 0 | 1 |
+| 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 3 | 0 | 2 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 8 | 0 | 0 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 6 | 0 | 0 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **43** | **0** | **1** |
+| **Total** | **44 tasks** | **42** | **0** | **2** |

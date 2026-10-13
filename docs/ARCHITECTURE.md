@@ -190,3 +190,14 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 8. Every material finding is evidence-backed.
 9. UI remains thin.
 10. New infrastructure is justified by a real task, not by fashion.
+
+## 14. Implementation Notes (kept in sync with completed tasks)
+
+### Persistence (Task 1.2)
+
+- Domain entities (`filinglens.domain.models`) are frozen dataclasses with UTC-aware timestamps; naive datetimes are rejected.
+- Repository interfaces live in `filinglens.application.ports`; `filinglens.infrastructure.storage.sqlite` implements them. Domain/application code never imports SQLite, HTTP, FastAPI or Streamlit (enforced by an import test).
+- Each table stores indexed identity columns plus the full entity as a JSON payload.
+- Migrations are forward-only, numbered, append-only and recorded in `schema_migrations`.
+- Accession identity: re-adding an accession with identical content is a no-op; `None` fields may be filled by later sources; any conflicting non-null value raises `ConflictError`. A filing discovered under a second CIK (co-registrant) is linked through `filing_issuers`, never duplicated.
+- Source snapshots are content-addressed by sha256 and never overwritten.
