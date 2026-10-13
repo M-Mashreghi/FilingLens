@@ -277,3 +277,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.diff.alignment.align_documents` (`alignment/1`) aligns sections by SEC item key only; blocks are never matched across different items.
 - Within a section: identical fingerprints → `identical`; identical after year/date/number normalization (`boilerplate_key`) → `modified` with similarity 1.0; otherwise greedy same-kind similarity (max of token Jaccard and sequence ratio on normalized text, threshold 0.55) → `modified`; leftovers → `added` / `removed`.
 - Reorders are flagged `moved` (pairs outside one longest increasing subsequence). A match whose runner-up is within 0.03 similarity is `ambiguous` with confidence ≤ 0.5. Missing/ambiguous sections are carried into notes and statuses.
+
+### Text & table diff (Task 3.4)
+
+- `filinglens.diff.text_diff.diff_documents` (`diff/1`) converts an alignment into `Change`s (`added` / `removed` / `modified`) with stable ids `chg-<sha256[:16]>` and `EvidenceRef`s (snapshot id, block id, locator, exact text) for both sides.
+- Modified paragraphs carry sentence-level edits (abbreviation-aware splitter + sequence matching); unchanged sentences are not reported.
+- Tables are diffed by row label (first non-numeric cell): added/removed rows and per-column cell changes. Tables with duplicate row labels are marked `supported=False` with a reason instead of producing a guessed cell diff.
+- `SectionStat` reports old/new chars, length delta, word-level change magnitude (1 − sequence ratio) and change counts.

@@ -70,7 +70,7 @@ Update this file only after task verification.
 - [x] Task 3.1 — Comparable Filing Selection Policy
 - [x] Task 3.2 — Amendment, Restatement & Filing Lineage Engine
 - [x] Task 3.3 — Section Alignment Engine
-- [ ] Task 3.4 — Deterministic Text & Table Diff Engine
+- [x] Task 3.4 — Deterministic Text & Table Diff Engine
 - [ ] Task 3.5 — Risk, MD&A, Liquidity & Exhibit Change Detectors
 - [ ] Task 3.6 — Research Priority Feature Builder
 

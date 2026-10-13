@@ -384,7 +384,7 @@ Align corresponding sections and blocks despite reorder, heading drift and boile
 
 ## Task 3.4 — Deterministic Text & Table Diff Engine
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Produce exact reviewable text/table changes before any LLM interpretation.
@@ -399,10 +399,10 @@ Produce exact reviewable text/table changes before any LLM interpretation.
 
 **Definition of Done**
 
-- [ ] deterministic repeatability
-- [ ] text diff regression fixtures pass
-- [ ] supported table diff fixtures pass
-- [ ] evidence links resolve to both source snapshots
+- [x] deterministic repeatability
+- [x] text diff regression fixtures pass
+- [x] supported table diff fixtures pass
+- [x] evidence links resolve to both source snapshots
 
 ## Task 3.5 — Risk, MD&A, Liquidity & Exhibit Change Detectors
 
@@ -996,9 +996,9 @@ Exercise production behavior under bounded concurrency and certify research inte
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
-| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 3 | 0 | 3 |
+| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 2 | 0 | 4 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **28** | **0** | **16** |
+| **Total** | **44 tasks** | **27** | **0** | **17** |
