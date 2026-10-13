@@ -271,3 +271,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `LineageEngine.period(base, as_of)` returns original, amendments public at `as_of` and the `effective` version; before an amendment's `available_at` the original state is returned.
 - `restatement_signals(as_of)` surfaces 8-K Item 4.02 non-reliance filings and 10-K/A / 10-Q/A amendments with neutral wording.
 - Amendment-vs-original (`amendment_only_changes`, by block fingerprint) and effective-vs-prior-period (comparator policy) are separate lenses.
+
+### Section alignment (Task 3.3)
+
+- `filinglens.diff.alignment.align_documents` (`alignment/1`) aligns sections by SEC item key only; blocks are never matched across different items.
+- Within a section: identical fingerprints → `identical`; identical after year/date/number normalization (`boilerplate_key`) → `modified` with similarity 1.0; otherwise greedy same-kind similarity (max of token Jaccard and sequence ratio on normalized text, threshold 0.55) → `modified`; leftovers → `added` / `removed`.
+- Reorders are flagged `moved` (pairs outside one longest increasing subsequence). A match whose runner-up is within 0.03 similarity is `ambiguous` with confidence ≤ 0.5. Missing/ambiguous sections are carried into notes and statuses.

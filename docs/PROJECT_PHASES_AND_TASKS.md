@@ -362,7 +362,7 @@ Track 10-K/A, 10-Q/A and related non-reliance/restatement signals as explicit li
 
 ## Task 3.3 — Section Alignment Engine
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Align corresponding sections and blocks despite reorder, heading drift and boilerplate churn.
@@ -377,10 +377,10 @@ Align corresponding sections and blocks despite reorder, heading drift and boile
 
 **Definition of Done**
 
-- [ ] reorder fixture works
-- [ ] boilerplate fixture works
-- [ ] cross-section false matches rejected
-- [ ] ambiguous alignment exposed
+- [x] reorder fixture works
+- [x] boilerplate fixture works
+- [x] cross-section false matches rejected
+- [x] ambiguous alignment exposed
 
 ## Task 3.4 — Deterministic Text & Table Diff Engine
 
@@ -996,9 +996,9 @@ Exercise production behavior under bounded concurrency and certify research inte
 |---|---|---:|---:|---:|
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
-| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 4 | 0 | 2 |
+| 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 3 | 0 | 3 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 7 | 0 | 0 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **29** | **0** | **15** |
+| **Total** | **44 tasks** | **28** | **0** | **16** |
