@@ -1,0 +1,21 @@
+{
+  "corpus_version": "golden-corpus/1",
+  "failures": [],
+  "harness_version": "eval-harness/1",
+  "metrics": {
+    "ambiguous_detection_rate": 1.0,
+    "comparator_accuracy": 1.0,
+    "evidence_binding_rate": 1.0,
+    "finding_precision": 1.0,
+    "finding_recall": 1.0,
+    "point_in_time_violations": 0.0,
+    "retrieval_recall_at_k": 1.0,
+    "section_success_rate": 1.0,
+    "unsupported_claim_rate_in_accepted": 0.0,
+    "wrong_accession_rate": 0.0,
+    "xbrl_fact_accuracy": 1.0
+  },
+  "passed": true,
+  "regressions": [],
+  "threshold_violations": []
+}

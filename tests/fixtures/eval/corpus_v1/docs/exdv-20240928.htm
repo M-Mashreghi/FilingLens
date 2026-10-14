@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ix="http://www.xbrl.org/2013/inlineXBRL"
+      xmlns:ixt="http://www.xbrl.org/inlineXBRL/transformation/2020-02-12"
+      xmlns:xbrli="http://www.xbrl.org/2003/instance"
+      xmlns:xbrldi="http://xbrl.org/2006/xbrldi"
+      xmlns:iso4217="http://www.xbrl.org/2003/iso4217"
+      xmlns:us-gaap="http://fasb.org/us-gaap/2024"
+      xmlns:dei="http://xbrl.sec.gov/dei/2024"
+      xmlns:srt="http://fasb.org/srt/2024"
+      xmlns:exdv="http://www.exampledevices.com/20240928"
+      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<head><title>exdv-20240928</title></head>
+<body>
+<div style="display:none"><ix:header>
+ <ix:hidden>
+  <ix:nonNumeric name="dei:DocumentType" contextRef="FY2024">10-K</ix:nonNumeric>
+  <ix:nonNumeric name="dei:AmendmentFlag" contextRef="FY2024">false</ix:nonNumeric>
+  <ix:nonFraction name="us-gaap:IncomeTaxExaminationPenaltiesAndInterestAccrued" contextRef="I2024" unitRef="usd" decimals="-6" scale="6">12</ix:nonFraction>
+ </ix:hidden>
+ <ix:resources>
+  <xbrli:context id="FY2024"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001234567</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2023-10-01</xbrli:startDate><xbrli:endDate>2024-09-28</xbrli:endDate></xbrli:period></xbrli:context>
+  <xbrli:context id="FY2023"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001234567</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:startDate>2022-09-25</xbrli:startDate><xbrli:endDate>2023-09-30</xbrli:endDate></xbrli:period></xbrli:context>
+  <xbrli:context id="I2024"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001234567</xbrli:identifier></xbrli:entity><xbrli:period><xbrli:instant>2024-09-28</xbrli:instant></xbrli:period></xbrli:context>
+  <xbrli:context id="FY2024_Services"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001234567</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="srt:ProductOrServiceAxis">us-gaap:ServiceMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-10-01</xbrli:startDate><xbrli:endDate>2024-09-28</xbrli:endDate></xbrli:period></xbrli:context>
+  <xbrli:context id="FY2024_Europe_Services"><xbrli:entity><xbrli:identifier scheme="http://www.sec.gov/CIK">0001234567</xbrli:identifier><xbrli:segment><xbrldi:explicitMember dimension="us-gaap:StatementBusinessSegmentsAxis">exdv:EuropeSegmentMember</xbrldi:explicitMember><xbrldi:explicitMember dimension="srt:ProductOrServiceAxis">us-gaap:ServiceMember</xbrldi:explicitMember></xbrli:segment></xbrli:entity><xbrli:period><xbrli:startDate>2023-10-01</xbrli:startDate><xbrli:endDate>2024-09-28</xbrli:endDate></xbrli:period></xbrli:context>
+  <xbrli:unit id="usd"><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unit>
+  <xbrli:unit id="usdPerShare"><xbrli:divide><xbrli:unitNumerator><xbrli:measure>iso4217:USD</xbrli:measure></xbrli:unitNumerator><xbrli:unitDenominator><xbrli:measure>xbrli:shares</xbrli:measure></xbrli:unitDenominator></xbrli:divide></xbrli:unit>
+  <xbrli:unit id="customers"><xbrli:measure>exdv:Customer</xbrli:measure></xbrli:unit>
+ </ix:resources>
+</ix:header></div>
+<p>Total net sales were $<ix:nonFraction name="us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax" contextRef="FY2024" unitRef="usd" decimals="-6" scale="6" format="ixt:num-dot-decimal">391,035</ix:nonFraction> million compared to $<ix:nonFraction name="us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax" contextRef="FY2023" unitRef="usd" decimals="-6" scale="6" format="ixt:num-dot-decimal">383,285</ix:nonFraction> million.</p>
+<p>Services net sales were $<ix:nonFraction name="us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax" contextRef="FY2024_Services" unitRef="usd" decimals="-6" scale="6">96,169</ix:nonFraction> million, of which Europe was $<ix:nonFraction name="us-gaap:RevenueFromContractWithCustomerExcludingAssessedTax" contextRef="FY2024_Europe_Services" unitRef="usd" decimals="-6" scale="6">24,000</ix:nonFraction> million.</p>
+<p>Other income (expense), net was $(<ix:nonFraction name="us-gaap:NonoperatingIncomeExpense" contextRef="FY2024" unitRef="usd" decimals="-6" scale="6" sign="-">269</ix:nonFraction>) million.</p>
+<p>Diluted earnings per share were $<ix:nonFraction name="us-gaap:EarningsPerShareDiluted" contextRef="FY2024" unitRef="usdPerShare" decimals="2">6.08</ix:nonFraction>.</p>
+<p>Active subscription customers: <ix:nonFraction name="exdv:ActiveSubscriptionCustomers" contextRef="I2024" unitRef="customers" decimals="-6" scale="6">1,050</ix:nonFraction> million.</p>
+<p>Restructuring charges: <ix:nonFraction name="us-gaap:RestructuringCharges" contextRef="FY2024" unitRef="usd" format="ixt:fixed-zero">—</ix:nonFraction>.</p>
+<p>Goodwill impairment: <ix:nonFraction name="us-gaap:GoodwillImpairmentLoss" contextRef="FY2024" unitRef="usd" xsi:nil="true"></ix:nonFraction></p>
+<p><ix:nonNumeric name="exdv:SupplyChainPolicyTextBlock" contextRef="FY2024">Our supply chain policy requires dual sourcing.</ix:nonNumeric></p>
+</body></html>

@@ -113,3 +113,10 @@ A release record should contain:
 - point-in-time test result
 - unsupported-claim result
 - known waivers/regressions
+
+## 6. Implemented Harness (Task 5.5)
+
+- Corpus: `tests/fixtures/eval/corpus_v1/manifest.json` (`golden-corpus/1`) with minimized synthetic documents modelled on public filing structure (no full third-party filings). It covers 10-K/10-Q section boundaries plus a labelled ambiguous case, a comparator matrix (52/53-week year, sequential lens, focal amendment, `as_of` cut-off), bounded retrieval queries, labelled model findings (supported, invented guidance, wrong-accession citation) and custom/dimensional/sign/nil iXBRL facts.
+- Runner: `filinglens.evaluation.harness.run_eval` (`eval-harness/1`); CLI `uv run python scripts/run_eval.py` (exit 1 on threshold violation or regression; `--write-baseline` refuses to store a failing baseline).
+- Metrics: section success rate, ambiguous detection rate, comparator accuracy, point-in-time violations, retrieval recall@k, wrong-accession rate, finding precision/recall, unsupported-claim rate among accepted findings, evidence-binding rate, XBRL fact accuracy. Thresholds live in the manifest; `baseline.json` stores the reproducible baseline and any worsening metric is reported as a regression.
+- Model outputs in the corpus are replayed through `FakeProvider`; live/paid LLM evaluation is a separate optional run with recorded model/prompt versions.
