@@ -95,6 +95,7 @@ Exact libraries should be chosen per atomic task rather than added prematurely.
 - `docs/DIAGRAMS.md` — Mermaid diagrams
 - `docs/DEPLOYMENT.md` — deployment/CI
 - `docs/RUNBOOK.md` — incident/recovery procedures
+- `docs/API.md` — HTTP API contract
 
 ## Development
 

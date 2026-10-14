@@ -125,7 +125,7 @@ Update this file only after task verification.
 
 ## Phase 6 — API, Dashboard, Watchlists & Research Workflow
 
-- [ ] Task 6.1 — Core FastAPI Endpoints
+- [x] Task 6.1 — Core FastAPI Endpoints
 - [ ] Task 6.2 — Streamlit Analyst Dashboard
 - [ ] Task 6.3 — Filing Comparison Workspace
 - [ ] Task 6.4 — Watchlist & New-Filing Workflow

@@ -12,6 +12,7 @@ from pydantic import ValidationError
 
 import filinglens
 from filinglens.api.app import create_app
+from filinglens.bootstrap import Container
 from filinglens.config import Settings
 from filinglens.logging_setup import JsonFormatter, scrub
 
@@ -28,7 +29,7 @@ def test_package_imports() -> None:
 
 
 def test_health_endpoint() -> None:
-    client = TestClient(create_app(Settings(env="test")))
+    client = TestClient(create_app(Settings(env="test"), container=Container.in_memory()))
     resp = client.get("/healthz")
     assert resp.status_code == 200
     assert resp.json()["status"] == "ok"

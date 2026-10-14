@@ -727,7 +727,7 @@ Q&A is filtered to selected snapshot(s) and cites every factual answer.
 
 ## Task 6.1 — Core FastAPI Endpoints
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Expose issuer, filing package, comparison run, finding, evidence, report and health operations through thin API endpoints.
@@ -742,9 +742,9 @@ Expose issuer, filing package, comparison run, finding, evidence, report and hea
 
 **Definition of Done**
 
-- [ ] API integration tests pass
-- [ ] validation/error contracts documented
-- [ ] no business logic duplicated in controllers
+- [x] API integration tests pass
+- [x] validation/error contracts documented
+- [x] no business logic duplicated in controllers
 
 ## Task 6.2 — Streamlit Analyst Dashboard
 
@@ -999,6 +999,6 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
-| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
+| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 5 | 0 | 1 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **12** | **0** | **32** |
+| **Total** | **44 tasks** | **11** | **0** | **33** |
