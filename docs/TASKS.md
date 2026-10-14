@@ -111,17 +111,17 @@ Update this file only after task verification.
 - [x] Task 5.3 — Filing Change Analyst Workflow
 - [x] Task 5.4 — Evidence Validator, Contradiction Checker & Priority Scorer
 - [x] Task 5.5 — Golden Evaluation Corpus & Regression Harness
-- [ ] Task 5.6 — Cited Filing Intelligence Report & Bounded Q&A
+- [x] Task 5.6 — Cited Filing Intelligence Report & Bounded Q&A
 
 ### Verification — Phase 5
 
 | Item | Detail |
 |---|---|
-| Status | Not Started |
-| Tests | — |
-| Evaluation | — |
-| Docs | — |
-| Notes | — |
+| Status | Completed (2026-10-13) |
+| Tests | `uv run pytest` — 453 passed; ruff + mypy strict green |
+| Evaluation | Golden corpus golden-corpus/1 via scripts/run_eval.py: all metrics at baseline (section 1.0, comparator 1.0, recall@k 1.0, wrong-accession 0, unsupported accepted 0, binding 1.0, XBRL 1.0) |
+| Docs | ARCHITECTURE §14, EVALUATION §6 |
+| Notes | Mandatory CI uses FakeProvider only; paid/live LLM eval optional |
 
 ## Phase 6 — API, Dashboard, Watchlists & Research Workflow
 

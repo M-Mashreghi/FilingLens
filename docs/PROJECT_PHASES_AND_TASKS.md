@@ -703,7 +703,7 @@ Measure parser, retrieval and model quality instead of relying on anecdotal demo
 
 ## Task 5.6 — Cited Filing Intelligence Report & Bounded Q&A
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Produce an analyst-readable report and answer questions only from selected filing evidence.
@@ -716,10 +716,10 @@ Q&A is filtered to selected snapshot(s) and cites every factual answer.
 
 **Definition of Done**
 
-- [ ] material factual claims cited
-- [ ] reviewer can block finalization
-- [ ] report reproducible from run id
-- [ ] Q&A returns not_supported outside available evidence
+- [x] material factual claims cited
+- [x] reviewer can block finalization
+- [x] report reproducible from run id
+- [x] Q&A returns not_supported outside available evidence
 
 ---
 
@@ -998,7 +998,7 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
-| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 1 | 0 | 5 |
+| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **13** | **0** | **31** |
+| **Total** | **44 tasks** | **12** | **0** | **32** |

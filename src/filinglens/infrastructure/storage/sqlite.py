@@ -118,6 +118,15 @@ MIGRATIONS: list[tuple[int, str]] = [
         CREATE INDEX ix_attempts_doc ON retrieval_attempts (accession, filename, attempted_at);
         """,
     ),
+    (
+        5,
+        """
+        CREATE TABLE report_inputs (
+            run_id TEXT PRIMARY KEY, inputs_hash TEXT NOT NULL, inputs_json TEXT NOT NULL,
+            updated_at TEXT NOT NULL
+        );
+        """,
+    ),
 ]
 
 
@@ -709,6 +718,25 @@ class SqliteRetrievalAttemptRepository:
         return {str(r[0]) for r in rows}
 
 
+class SqliteReportInputsStore:
+    def __init__(self, db: Database) -> None:
+        self.db = db
+
+    def save(self, run_id: str, inputs_json: str, inputs_hash: str) -> None:
+        with self.db.transaction() as cur:
+            cur.execute(
+                "INSERT INTO report_inputs (run_id, inputs_hash, inputs_json, updated_at) "
+                "VALUES (?, ?, ?, ?) ON CONFLICT(run_id) DO UPDATE SET "
+                "inputs_hash = excluded.inputs_hash, inputs_json = excluded.inputs_json, "
+                "updated_at = excluded.updated_at",
+                (run_id, inputs_hash, inputs_json, utcnow().isoformat()),
+            )
+
+    def get(self, run_id: str) -> str | None:
+        rows = self.db.query("SELECT inputs_json FROM report_inputs WHERE run_id = ?", (run_id,))
+        return str(rows[0][0]) if rows else None
+
+
 @dataclasses.dataclass
 class SqliteRepositories:
     """Convenience bundle wiring every repository to one database."""
@@ -725,6 +753,7 @@ class SqliteRepositories:
     alerts: SqliteAlertRepository = dataclasses.field(init=False)
     reports: SqliteReportRepository = dataclasses.field(init=False)
     attempts: SqliteRetrievalAttemptRepository = dataclasses.field(init=False)
+    report_inputs: SqliteReportInputsStore = dataclasses.field(init=False)
 
     def __post_init__(self) -> None:
         self.issuers = SqliteIssuerRepository(self.db)
@@ -738,3 +767,4 @@ class SqliteRepositories:
         self.alerts = SqliteAlertRepository(self.db)
         self.reports = SqliteReportRepository(self.db)
         self.attempts = SqliteRetrievalAttemptRepository(self.db)
+        self.report_inputs = SqliteReportInputsStore(self.db)
