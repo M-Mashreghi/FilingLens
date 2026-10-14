@@ -1,0 +1,26 @@
+# Local/production-like composition. Secrets come from .env (never baked into the image).
+services:
+  api:
+    build: .
+    image: filinglens:local
+    env_file: .env
+    ports: ["8000:8000"]
+    volumes:
+      - filinglens-data:/app/data      # durable: SQLite + raw snapshots (back up)
+      - filinglens-cache:/app/cache    # rebuildable HTTP cache
+    stop_grace_period: 30s
+  ui:
+    image: filinglens:local
+    depends_on: [api]
+    env_file: .env
+    command: ["streamlit", "run", "src/filinglens/ui/app.py", "--server.address=0.0.0.0", "--server.port=8501", "--server.headless=true"]
+    ports: ["8501:8501"]
+    volumes:
+      - filinglens-data:/app/data
+      - filinglens-cache:/app/cache
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys, urllib.request; sys.exit(0 if urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=3).status == 200 else 1)"]
+      interval: 30s
+volumes:
+  filinglens-data:
+  filinglens-cache:

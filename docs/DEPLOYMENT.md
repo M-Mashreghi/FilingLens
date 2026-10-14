@@ -88,3 +88,12 @@ A publish/release job depends on green quality checks and Task 7.6 release quali
 ## Backup
 
 Back up SQLite + immutable raw snapshots + any manifest/version state required to reproduce completed reports. A production release is not ready until restore verifies historical report citations resolve.
+
+
+## Implemented Container Setup (Task 7.3)
+
+- `Dockerfile`: multi-stage build with `uv sync --frozen --no-dev` against the committed `uv.lock`; runtime is `python:3.12-slim` as non-root user `filinglens` (uid 10001); `HEALTHCHECK` probes `/healthz`; `STOPSIGNAL SIGTERM` with uvicorn `--timeout-graceful-shutdown 20`.
+- Paths: durable `/app/data` (SQLite `filinglens.db` + immutable `raw/` snapshots — back these up) and rebuildable `/app/cache` (HTTP cache) are separate volumes.
+- `docker-compose.yml` runs `api` (uvicorn) and `ui` (Streamlit) from the same image, sharing the volumes; configuration and secrets come from `.env` at runtime. `.dockerignore` excludes `.env`, data, caches, tests and VCS metadata; no secret is set via `ENV`/`ARG`.
+- Build/run: `docker compose build && docker compose up -d`; readiness at `http://localhost:8000/ready`.
+- Verification status: the production start/readiness/graceful-shutdown path is tested by starting the real uvicorn command; the image build itself runs in the CI `docker` job (no Docker host was available on the development machine).

@@ -904,7 +904,7 @@ Make source, parser, model and analysis failures diagnosable by run id without l
 
 ## Task 7.3 — Docker & Production Configuration
 
-**Status:** `[ ]` Not Started
+**Status:** `[-]` In Progress — implementation and tests done; image build awaits a Docker host (CI job in Task 7.4)
 
 **User Story**  
 Package the modular monolith reproducibly with durable provenance storage and rebuildable caches separated.
@@ -920,9 +920,9 @@ Package the modular monolith reproducibly with durable provenance storage and re
 **Definition of Done**
 
 - [ ] image builds and starts
-- [ ] health endpoint works
-- [ ] durable/rebuildable paths documented
-- [ ] no secret baked into image
+- [x] health endpoint works
+- [x] durable/rebuildable paths documented
+- [x] no secret baked into image
 
 ## Task 7.4 — GitHub Actions CI/CD & Release Workflow
 
@@ -1000,5 +1000,5 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 0 | 0 | 6 |
-| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 4 | 0 | 2 |
-| **Total** | **44 tasks** | **4** | **0** | **40** |
+| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 3 | 1 | 2 |
+| **Total** | **44 tasks** | **3** | **1** | **40** |

@@ -38,6 +38,7 @@ filterwarnings = [
 markers = [
     "live_sec: optional tests that call live SEC endpoints (require FILINGLENS_LIVE_SEC=1)",
     "live_llm: optional tests that call a paid LLM provider (require FILINGLENS_LIVE_LLM=1)",
+    "timeout_sensitive: starts real processes; may be slower on loaded machines",
 ]
 
 [tool.ruff]
