@@ -620,7 +620,7 @@ Retrieve bounded evidence from the correct accession, form, item, document and t
 
 ## Task 5.2 — Structured Filing Intelligence LLM Client
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Convert bounded diffs/evidence into schema-valid analyst findings.
@@ -633,10 +633,10 @@ Record model, provider, prompt version, schema version and request id/cost metad
 
 **Definition of Done**
 
-- [ ] valid schema path passes
-- [ ] malformed output fails closed
-- [ ] provider mockable
-- [ ] prompt/schema/model version recorded
+- [x] valid schema path passes
+- [x] malformed output fails closed
+- [x] provider mockable
+- [x] prompt/schema/model version recorded
 
 ## Task 5.3 — Filing Change Analyst Workflow
 
@@ -998,7 +998,7 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
-| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 5 | 0 | 1 |
+| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 4 | 0 | 2 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **17** | **0** | **27** |
+| **Total** | **44 tasks** | **16** | **0** | **28** |

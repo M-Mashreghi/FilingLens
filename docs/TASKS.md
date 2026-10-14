@@ -107,7 +107,7 @@ Update this file only after task verification.
 ## Phase 5 — LLM / RAG Filing Intelligence & Evaluation
 
 - [x] Task 5.1 — Section-Aware Retrieval Index
-- [ ] Task 5.2 — Structured Filing Intelligence LLM Client
+- [x] Task 5.2 — Structured Filing Intelligence LLM Client
 - [ ] Task 5.3 — Filing Change Analyst Workflow
 - [ ] Task 5.4 — Evidence Validator, Contradiction Checker & Priority Scorer
 - [ ] Task 5.5 — Golden Evaluation Corpus & Regression Harness

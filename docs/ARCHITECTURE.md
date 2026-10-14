@@ -338,3 +338,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.retrieval.index.RetrievalIndex` (`retrieval/1`) chunks each document by section then block (max 1,500 chars, never across sections or documents). Chunks keep accession, filename, doc type, section key, block ids, locators, snapshot hash and `available_at`.
 - `RetrievalFilter` requires a non-empty accession set and an `as_of`; optional section/document/doc-type filters. Filters are applied before scoring and re-checked on results, so bounded queries cannot return out-of-filter evidence.
 - Scoring is a deterministic BM25 baseline computed over the filtered candidates only; embedding scorers can be swapped in through the `Scorer` protocol (no vector database in v1).
+
+### Structured LLM client (Task 5.2)
+
+- `filinglens.llm.client.StructuredLLMClient` builds a bounded prompt (`filing-change-analyst/1`) from `EvidenceItem`s wrapped in `<evidence>` blocks (closing tags in content are escaped; the system prompt declares evidence untrusted) and requires JSON matching the pydantic `FindingsEnvelope` (`finding-schema/1`: finding type, document/section, direction, severity, confidence, summary, why it matters, evidence ids, open questions, interpretation status; extra fields forbidden).
+- Invalid JSON, schema violations or provider exceptions return `status=failed` with no findings (fail closed, never partial).
+- Every call records provider, model, prompt version, schema version, request id, token usage and cost. `FakeProvider` is the deterministic offline provider used in mandatory CI; paid providers implement `LLMProvider` and stay optional.
