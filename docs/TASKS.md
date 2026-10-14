@@ -108,7 +108,7 @@ Update this file only after task verification.
 
 - [x] Task 5.1 — Section-Aware Retrieval Index
 - [x] Task 5.2 — Structured Filing Intelligence LLM Client
-- [ ] Task 5.3 — Filing Change Analyst Workflow
+- [x] Task 5.3 — Filing Change Analyst Workflow
 - [ ] Task 5.4 — Evidence Validator, Contradiction Checker & Priority Scorer
 - [ ] Task 5.5 — Golden Evaluation Corpus & Regression Harness
 - [ ] Task 5.6 — Cited Filing Intelligence Report & Bounded Q&A

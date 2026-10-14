@@ -344,3 +344,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.llm.client.StructuredLLMClient` builds a bounded prompt (`filing-change-analyst/1`) from `EvidenceItem`s wrapped in `<evidence>` blocks (closing tags in content are escaped; the system prompt declares evidence untrusted) and requires JSON matching the pydantic `FindingsEnvelope` (`finding-schema/1`: finding type, document/section, direction, severity, confidence, summary, why it matters, evidence ids, open questions, interpretation status; extra fields forbidden).
 - Invalid JSON, schema violations or provider exceptions return `status=failed` with no findings (fail closed, never partial).
 - Every call records provider, model, prompt version, schema version, request id, token usage and cost. `FakeProvider` is the deterministic offline provider used in mandatory CI; paid providers implement `LLMProvider` and stay optional.
+
+### Analyst workflow (Task 5.3)
+
+- `filinglens.llm.workflow.build_evidence` turns change signals (old/new text), OK metrics (value, formula, accessions, engine version), flagged watch signals, reconciliations and lineage notes into bounded, id-addressed `EvidenceItem`s (default cap 60).
+- `FilingChangeWorkflow` (`analyst-workflow/1`) picks a form-specific task (10-K, 10-Q, 8-K, amendment), calls the structured client and reviews each finding: basis (`source_fact` vs `deterministic_calculation`; the model text is interpretation), unknown evidence ids flagged, no valid evidence → `not_supported`, numbers absent from cited evidence → `uncertain` + `numeric_unverified`, uncited "management said/expects" claims → `not_supported`.
+- An LLM failure returns `failed` with no findings while keeping the deterministic evidence list; no evidence means no model call.
