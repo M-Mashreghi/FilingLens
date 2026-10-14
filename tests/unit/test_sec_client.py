@@ -325,7 +325,12 @@ HTTP_MODULES = {"httpx", "requests", "urllib3", "aiohttp", "http.client"}
 
 
 def test_no_module_bypasses_the_governed_client() -> None:
-    allowed = {SRC / "infrastructure" / "sec" / "client.py"}
+    # The governed SEC client, plus the generic (non-SEC) webhook adapter which itself
+    # refuses SEC hosts.
+    allowed = {
+        SRC / "infrastructure" / "sec" / "client.py",
+        SRC / "infrastructure" / "notify" / "webhook.py",
+    }
     offenders = []
     for path in SRC.rglob("*.py"):
         if path in allowed:

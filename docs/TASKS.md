@@ -129,7 +129,7 @@ Update this file only after task verification.
 - [x] Task 6.2 — Streamlit Analyst Dashboard
 - [x] Task 6.3 — Filing Comparison Workspace
 - [x] Task 6.4 — Watchlist & New-Filing Workflow
-- [ ] Task 6.5 — Research Alerts & Triage Queue
+- [x] Task 6.5 — Research Alerts & Triage Queue
 - [ ] Task 6.6 — Export & Research Artifact Packaging
 
 ### Verification — Phase 6

@@ -377,3 +377,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 
 - `Watchlist` (cik, forms, `since`) selects filings whose `available_at` is after `since` (no backfill flood on creation). Stored in `watchlists`; per-accession state in `filing_reservations` (migration 6) with status (`reserved` / `enqueued` / `failed`), run id, attempts, last error and `available_at`.
 - `WatchlistPoller.poll_once` (`watchlist-poller/1`) fetches submissions through the governed adapter, ingests idempotently, atomically reserves each new accession (`INSERT OR IGNORE` inside an immediate transaction — concurrent pollers on separate connections cannot both win), then creates exactly one run with a deterministic id `wl-<sha256(watchlist|accession)>`. Run-creation failures mark the reservation `failed` and are retried on the next poll; a crash between run creation and marking is healed because the deterministic run id is reused. Source outages reserve nothing.
+
+### Alerts & triage (Task 6.5)
+
+- `filinglens.application.alerts.AlertService` (`alerts/1`) raises `new_filing`, `high_priority_finding` (accepted findings at or above a research-priority threshold), `restatement_signal` and operational (`source_failure`, `parser_failure`, `model_failure`) alerts. Dedupe keys (`new_filing:<acc>`, `finding:<run>:<type>:<section>`, `restatement:<acc>`, `op:<kind>:<run|error>`) suppress duplicates; research alerts must link to a run and `deep_link()` points at the run/finding (operational alerts carry the error).
+- `triage_queue()` lists unacknowledged alerts by priority then age; `acknowledge()` updates state.
+- Optional `HttpWebhookNotifier` (`infrastructure/notify/webhook.py`, refuses SEC hosts) is called after the alert is stored; delivery failures are recorded in `deliveries` and never roll back alert or analysis state.

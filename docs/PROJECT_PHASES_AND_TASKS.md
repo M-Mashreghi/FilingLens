@@ -816,7 +816,7 @@ Detect unseen filings for watched issuers and enqueue analysis idempotently.
 
 ## Task 6.5 — Research Alerts & Triage Queue
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Turn findings into a manageable analyst review queue instead of noisy notifications.
@@ -831,9 +831,9 @@ Turn findings into a manageable analyst review queue instead of noisy notificati
 
 **Definition of Done**
 
-- [ ] duplicate alerts suppressed
-- [ ] every alert links to a traceable run/evidence or operational error
-- [ ] external webhook failures do not corrupt analysis state
+- [x] duplicate alerts suppressed
+- [x] every alert links to a traceable run/evidence or operational error
+- [x] external webhook failures do not corrupt analysis state
 
 ## Task 6.6 — Export & Research Artifact Packaging
 
@@ -999,6 +999,6 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
-| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 2 | 0 | 4 |
+| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 1 | 0 | 5 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **8** | **0** | **36** |
+| **Total** | **44 tasks** | **7** | **0** | **37** |
