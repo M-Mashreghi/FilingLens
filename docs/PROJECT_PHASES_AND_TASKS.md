@@ -946,7 +946,7 @@ Block releases on code quality, tests and integrity gates.
 
 ## Task 7.5 — Backup, Restore & Operational Runbook
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Protect SQLite, raw snapshots and completed-run reproducibility through tested recovery.
@@ -960,9 +960,9 @@ Protect SQLite, raw snapshots and completed-run reproducibility through tested r
 
 **Definition of Done**
 
-- [ ] restore drill passes
-- [ ] completed run reopens with evidence after restore
-- [ ] RUNBOOK synchronized
+- [x] restore drill passes
+- [x] completed run reopens with evidence after restore
+- [x] RUNBOOK synchronized
 
 ## Task 7.6 — SEC Traffic, Integrity & Release Qualification Gate
 
@@ -1000,5 +1000,5 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 0 | 0 | 6 |
-| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 3 | 0 | 3 |
-| **Total** | **44 tasks** | **3** | **0** | **41** |
+| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 2 | 0 | 4 |
+| **Total** | **44 tasks** | **2** | **0** | **42** |

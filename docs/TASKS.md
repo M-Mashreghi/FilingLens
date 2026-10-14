@@ -148,7 +148,7 @@ Update this file only after task verification.
 - [x] Task 7.2 — Observability, Structured Logging & Health Checks
 - [-] Task 7.3 — Docker & Production Configuration (image build pending a Docker host / CI)
 - [x] Task 7.4 — GitHub Actions CI/CD & Release Workflow
-- [ ] Task 7.5 — Backup, Restore & Operational Runbook
+- [x] Task 7.5 — Backup, Restore & Operational Runbook
 - [ ] Task 7.6 — SEC Traffic, Integrity & Release Qualification Gate
 
 ### Verification — Phase 7

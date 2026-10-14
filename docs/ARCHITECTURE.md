@@ -400,3 +400,8 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.observability` (`telemetry/1`): `log_context(...)` binds `correlation_id`, `run_id`, `accession`, `cik` and stage to every record through a `ContextFilter` installed by `configure_logging`; JSON logs scrub secrets (key/value patterns, bearer tokens, `sk-` keys, sensitive extra fields).
 - `Telemetry.stage()` records per-stage counts, errors and timings; errors are categorized (`source`, `parser`, `alignment`, `model`, `validation`, `internal`). The pipeline logs every run transition and `run stopped` with category and error, so a failed run is traceable end-to-end by `run_id`/`correlation_id`.
 - API probes: `/healthz` (liveness), `/ready` (database reachable at the latest schema, raw store writable; 503 otherwise) and `/health/detailed` (schema version, runs by state, pending alerts, telemetry, SEC client request/cache/rate-limit metrics when wired; never secrets).
+
+### Backup, restore & drill (Task 7.5)
+
+- `filinglens.infrastructure.storage.backup` (`backup/1`): consistent SQLite copy via the online backup API, raw objects copied and re-hashed, manifest with database hash, per-object hashes, schema version and completed runs; `verify_backup`, `restore_backup` (empty targets only, hash-checked) and `prune_backups` retention.
+- `filinglens.application.restore_drill.restore_drill` reopens every completed run after restore: manifest verification, snapshot re-hash from the restored raw store, evidence → manifest snapshot checks and byte-identical report regeneration from stored inputs. The e2e test restores a completed pipeline run and requires the drill to pass; corrupted or missing objects are detected. Procedures are in `docs/RUNBOOK.md` §16.

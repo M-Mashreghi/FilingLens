@@ -2,13 +2,16 @@
 
 ## 1. Health
 
-Expected endpoints after implementation:
+Implemented endpoints (see also *Diagnostics* below):
 
 - `/healthz` — process alive
 - `/ready` — DB/storage/config usable
 - `/health/detailed` — component diagnostics without secrets
 
-## 2. SEC 403 / 429 / Timeout / 5xx
+## 2. SEC Outage / 403 / 429 / Timeout / 5xx
+
+Runs hit by an SEC outage stop in `BlockedBySource` with a `source_failure` alert; resume them (`BlockedBySource → Collecting`) once SEC recovers instead of re-running from scratch.
+
 
 1. locate run/accession and request telemetry;
 2. verify configured descriptive SEC User-Agent/contact;
@@ -37,7 +40,10 @@ If an exhibit was mistaken for primary or an important exhibit was missed:
 
 Never overwrite. Retain retrieval metadata, compare raw bytes/source URLs, identify whether content/endpoint/path changed, and create explicit new snapshot/retrieval relation if warranted.
 
-## 6. 10-K / 10-Q Parser Failure
+## 6. 10-K / 10-Q Parser Failure / Parser Drift
+
+Parser drift (new filing layouts breaking boundaries) shows up as `ambiguous`/`missing` sections, `NeedsInput` runs with `parser_failure` alerts and a drop in `section_success_rate` in `scripts/run_eval.py`.
+
 
 Reproduce against exact raw snapshot, inspect boundaries, add regression fixture, prefer general structural fix over issuer-specific hack, and return explicit ambiguity if still uncertain.
 
@@ -74,7 +80,10 @@ When a new SEC-supported taxonomy breaks mappings:
 4. rerun evaluation;
 5. do not silently reinterpret old reports.
 
-## 12. LLM Malformed / Unsupported Output
+## 12. LLM Malformed / Unsupported Output (LLM failures)
+
+The pipeline moves the run to `NeedsInput` with a `model_failure` alert; no partial findings are stored.
+
 
 Use bounded retry if policy allows. Schema failure becomes structured failure/uncertain. Never publish free-form provider output as an approved finding.
 
@@ -92,7 +101,35 @@ For duplicates, inspect accession reservation/idempotency/concurrency. For misse
 
 ## 16. Backup / Restore
 
-Stop writers, preserve current state for forensics, restore SQLite and raw snapshot store, run integrity/schema checks, start services, then open a completed historical run and verify every sampled citation resolves to the same snapshot hash.
+Implemented in `filinglens.infrastructure.storage.backup` (`backup/1`) and `filinglens.application.restore_drill`.
+
+Backup (can run while the API is up; SQLite online backup API):
+
+```python
+from datetime import UTC, datetime
+from pathlib import Path
+from filinglens.infrastructure.storage.backup import create_backup, prune_backups
+
+create_backup(
+    Path("/app/data/filinglens.db"),
+    Path("/app/data/raw"),
+    Path("/backups/2026-10-14"),
+    created_at=datetime.now(UTC),
+)
+prune_backups(Path("/backups"), keep=14)
+```
+
+The backup manifest records the database hash, every raw object hash, schema version and completed run ids; raw objects are re-hashed during backup.
+
+Restore:
+
+1. stop writers (API, UI, poller) and preserve the current state for forensics;
+2. `verify_backup(dir)` — every hash must match;
+3. `restore_backup(dir, db_path, raw_dir)` into empty targets (it refuses to overwrite);
+4. run the **restore drill**: `restore_drill(repos.runs, repos.snapshots, repos.evidence, FileSystemRawStore(raw_dir), ReportService(repos.reports, repos.report_inputs))` — it must report `passed`: every completed run's manifest verifies, every snapshot re-hashes from the restored raw store, every evidence span cites a manifest snapshot, and each finalized report regenerates byte-for-byte from its stored inputs;
+5. start services and check `/ready`.
+
+Retention: keep at least the last 14 daily backups; raw snapshots pinned by completed runs must never be purged (`SnapshotRetentionService`).
 
 ## 17. Release-Day Checklist
 
