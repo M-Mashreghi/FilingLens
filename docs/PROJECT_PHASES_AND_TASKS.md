@@ -537,7 +537,7 @@ Handle evolving SEC-supported taxonomies and issuer extensions without brittle h
 
 ## Task 4.5 — Deterministic Financial Trend Engine
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Calculate reproducible financial changes from normalized facts.
@@ -550,10 +550,10 @@ All outputs retain source fact ids and transformation definitions.
 
 **Definition of Done**
 
-- [ ] hand-verified formula fixtures pass
-- [ ] unit/sign conventions documented
-- [ ] every metric traces to facts/accessions
-- [ ] point-in-time filtering enforced
+- [x] hand-verified formula fixtures pass
+- [x] unit/sign conventions documented
+- [x] every metric traces to facts/accessions
+- [x] point-in-time filtering enforced
 
 ## Task 4.6 — Accounting / Disclosure Watch Signals
 
@@ -997,8 +997,8 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
-| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 3 | 0 | 4 |
+| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 2 | 0 | 5 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **21** | **0** | **23** |
+| **Total** | **44 tasks** | **20** | **0** | **24** |

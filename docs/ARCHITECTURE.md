@@ -315,3 +315,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.xbrl.taxonomy` (`concept-map/1`): `taxonomy_version()` reads prefix/year from the fact namespace. `STANDARD_RULES` map standard concepts to canonical metrics (revenue, cost of revenue, gross profit, operating income, net income, operating cash flow, capex, cash, debt, receivables, inventory, current assets/liabilities, shares, diluted EPS) with rule ids, priorities and optional taxonomy-version validity (e.g. `SalesRevenueNet` only through 2018).
 - Custom extension concepts map only through an issuer-scoped `CustomMappingRule` that must carry evidence; dimensional facts never map to entity-wide metrics.
 - `detect_drift` reports taxonomy version changes per prefix and changes in the concepts used for a metric between two filings.
+
+### Financial trend engine (Task 4.5)
+
+- `filinglens.analytics.trends` (`trend-engine/1`): `CanonicalStore` resolves canonical metric values from entity-wide facts via `ConceptMapper` (lowest rule priority wins) and `FactSet` duplicate policy, optionally restricted to `eligible_accessions` (filings public at `as_of`).
+- `TrendEngine.compute(PeriodPair)` returns `MetricResult`s with formula, inputs (value, period, unit, fact ids, accession) and version: revenue/net income/OCF/receivables/inventory/diluted-share growth, gross and operating margins and deltas (gross profit may be derived as revenue − cost of revenue, recorded as `derived:`), OCF, capex, FCF, cash and long-term-debt change, working capital, current ratio and net debt.
+- Conventions: Decimal arithmetic, ratios quantized to 1e-6; growth = (cur − prior)/|prior| (undefined when prior = 0); margin deltas are fraction differences; capex is the positive payment and FCF = OCF − capex; balance-sheet values are instants at period ends; mismatched units are refused; missing inputs give `insufficient_data` with the missing names.

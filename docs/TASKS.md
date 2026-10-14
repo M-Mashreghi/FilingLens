@@ -90,7 +90,7 @@ Update this file only after task verification.
 - [x] Task 4.2 — Direct Filing iXBRL Fact Extractor
 - [x] Task 4.3 — XBRL Context, Unit, Dimension & Period Normalizer
 - [x] Task 4.4 — Taxonomy / Concept Mapping & Version-Drift Layer
-- [ ] Task 4.5 — Deterministic Financial Trend Engine
+- [x] Task 4.5 — Deterministic Financial Trend Engine
 - [ ] Task 4.6 — Accounting / Disclosure Watch Signals
 - [ ] Task 4.7 — Narrative ↔ Numeric Reconciliation Engine
 
