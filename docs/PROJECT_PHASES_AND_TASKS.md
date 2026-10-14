@@ -748,7 +748,7 @@ Expose issuer, filing package, comparison run, finding, evidence, report and hea
 
 ## Task 6.2 — Streamlit Analyst Dashboard
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Provide a polished analyst UI for issuer search, filing timeline, run status and top findings.
@@ -764,9 +764,9 @@ Provide a polished analyst UI for issuer search, filing timeline, run status and
 
 **Definition of Done**
 
-- [ ] primary flow usable on desktop
-- [ ] ambiguity/failed-run states visible
-- [ ] UI remains thin over application/API
+- [x] primary flow usable on desktop
+- [x] ambiguity/failed-run states visible
+- [x] UI remains thin over application/API
 
 ## Task 6.3 — Filing Comparison Workspace
 
@@ -999,6 +999,6 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
-| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 5 | 0 | 1 |
+| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 4 | 0 | 2 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **11** | **0** | **33** |
+| **Total** | **44 tasks** | **10** | **0** | **34** |
