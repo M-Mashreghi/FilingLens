@@ -302,3 +302,10 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.domain.xbrl.XbrlFact` is shared by both paths and keeps `source` (`companyfacts` vs `ixbrl`), prefix/concept/namespace, standard-vs-custom status (prefix outside the standard taxonomy set), unit, Decimal value or text, period (instant vs duration), decimals/scale/sign, sorted `(axis, member)` dimensions, context id, hidden flag, locator and a content-hash `fact_id`.
 - `filinglens.xbrl.ixbrl.extract_ixbrl` (`ixbrl-extractor/1`, namespace-aware lxml, no network/entity resolution) reads `xbrli:context` (period, explicit and typed members) and `xbrli:unit` (incl. divide units such as `USD/shares`), then every `ix:nonFraction` / `ix:nonNumeric`. Scale and `sign="-"` are applied; `ixt:fixed-zero` / dashes are zero; `xsi:nil` is `None` (missing, not zero). Facts inside `ix:hidden` keep `hidden=True`. Locators are lxml element paths (`tree.find(locator)`).
 - Dimensional facts stay separate from entity-wide facts; unknown contexts/units or unparseable numbers are reported in `errors`, never silently dropped.
+
+### XBRL normalization (Task 4.3)
+
+- `filinglens.xbrl.normalize.FactSet` (`xbrl-normalizer/1`) keys facts by (qname, normalized unit, period start/end, dimensions) and classifies periods (`instant`, `quarter`, `half_year_ytd`, `nine_months_ytd`, `annual`, `other_duration`) with fiscal-quarter metadata from the issuer FYE.
+- Units are normalized (`iso4217:USD` → `USD`, `xbrli:shares` → `shares`, divide units kept as `A/B`) while the original unit is retained.
+- Duplicate policy `duplicates/consistent-within-coarsest-decimals`: duplicates that agree after rounding to the coarsest declared decimals resolve to the most precise fact; disagreeing duplicates are `conflict` with no value. Several units for one key are a `conflict` unless a unit is requested.
+- Lookups never collapse dimensions (entity-wide lookups only see dimensionless facts) and return `missing` with `value=None` for nil/absent facts — never zero.

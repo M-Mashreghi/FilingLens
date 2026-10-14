@@ -493,7 +493,7 @@ Extract filing-specific facts that aggregate APIs may omit, including custom con
 
 ## Task 4.3 — XBRL Context, Unit, Dimension & Period Normalizer
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Normalize facts safely while preserving semantics needed for correct comparisons.
@@ -509,10 +509,10 @@ Normalize facts safely while preserving semantics needed for correct comparisons
 
 **Definition of Done**
 
-- [ ] period/unit/dimension fixtures pass
-- [ ] duplicate context policy tested
-- [ ] no dimension collapse
-- [ ] missing != zero
+- [x] period/unit/dimension fixtures pass
+- [x] duplicate context policy tested
+- [x] no dimension collapse
+- [x] missing != zero
 
 ## Task 4.4 — Taxonomy / Concept Mapping & Version-Drift Layer
 
@@ -997,8 +997,8 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
-| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 5 | 0 | 2 |
+| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 4 | 0 | 3 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **23** | **0** | **21** |
+| **Total** | **44 tasks** | **22** | **0** | **22** |
