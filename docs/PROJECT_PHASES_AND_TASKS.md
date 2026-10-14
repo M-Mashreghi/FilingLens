@@ -883,7 +883,7 @@ Prove issuer → package → parse → lineage → diff → XBRL → LLM → evi
 
 ## Task 7.2 — Observability, Structured Logging & Health Checks
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Make source, parser, model and analysis failures diagnosable by run id without leaking secrets.
@@ -898,9 +898,9 @@ Make source, parser, model and analysis failures diagnosable by run id without l
 
 **Definition of Done**
 
-- [ ] health tests pass
-- [ ] no secrets/raw private credentials in logs
-- [ ] a failed run is traceable end-to-end
+- [x] health tests pass
+- [x] no secrets/raw private credentials in logs
+- [x] a failed run is traceable end-to-end
 
 ## Task 7.3 — Docker & Production Configuration
 
@@ -1000,5 +1000,5 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 0 | 0 | 6 |
-| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 5 | 0 | 1 |
-| **Total** | **44 tasks** | **5** | **0** | **39** |
+| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 4 | 0 | 2 |
+| **Total** | **44 tasks** | **4** | **0** | **40** |

@@ -64,6 +64,9 @@ def configure_logging(level: str = "INFO", json_output: bool = False) -> None:
         handler.setFormatter(
             ScrubbingTextFormatter("%(asctime)s %(levelname)s %(name)s: %(message)s")
         )
+    from filinglens.observability import ContextFilter
+
+    handler.addFilter(ContextFilter())
     root = logging.getLogger()
     root.handlers[:] = [handler]
     root.setLevel(level)

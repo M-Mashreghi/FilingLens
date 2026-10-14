@@ -3,12 +3,15 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from pathlib import Path
 
 from filinglens.application.issuer_resolver import IssuerResolver, ReferenceDataset
 from filinglens.application.metadata import FilingMetadataService
 from filinglens.application.runs import RunService
 from filinglens.config import Settings
+from filinglens.infrastructure.sec.client import SecHttpClient
 from filinglens.infrastructure.storage.sqlite import Database, SqliteRepositories
+from filinglens.observability import Telemetry
 from filinglens.reporting.report import ReportService
 
 
@@ -16,6 +19,9 @@ from filinglens.reporting.report import ReportService
 class Container:
     repos: SqliteRepositories
     reference: ReferenceDataset | None = None
+    telemetry: Telemetry = field(default_factory=Telemetry)
+    sec_client: SecHttpClient | None = None
+    raw_dir: Path | None = None
     runs: RunService = field(init=False)
     metadata: FilingMetadataService = field(init=False)
     reports: ReportService = field(init=False)
@@ -34,7 +40,7 @@ class Container:
 
     @classmethod
     def from_settings(cls, settings: Settings) -> Container:
-        return cls(SqliteRepositories(Database(settings.db_path)))
+        return cls(SqliteRepositories(Database(settings.db_path)), raw_dir=settings.raw_dir)
 
     @classmethod
     def in_memory(cls) -> Container:

@@ -109,3 +109,9 @@ Stop writers, preserve current state for forensics, restore SQLite and raw snaps
 - health/readiness green
 - backup/restore verified
 - release qualification record stored
+
+
+## Diagnostics (implemented)
+
+- Liveness: `GET /healthz`. Readiness: `GET /ready` (database schema current, raw store writable). Detail: `GET /health/detailed` (runs by state, pending alerts, stage telemetry, SEC request/cache/429/403 counters).
+- Trace a run: filter JSON logs (`FILINGLENS_LOG_JSON=true`) by `run_id` or `correlation_id`; `run stopped` records carry `error_category` (`source`, `parser`, `model`, ...) and the error text. Operational alerts with the same run id appear in the triage queue.

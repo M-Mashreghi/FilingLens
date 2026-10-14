@@ -11,11 +11,12 @@ are updated at each stage; failures move the run to ``BlockedBySource``, ``Needs
 from __future__ import annotations
 
 import dataclasses
+import logging
 from collections.abc import Callable, Sequence
 from dataclasses import dataclass, field
 from datetime import datetime
 from decimal import Decimal
-from typing import Protocol
+from typing import Any, Protocol
 
 from filinglens.analytics.reconciliation import (
     RECONCILIATION_VERSION,
@@ -65,6 +66,7 @@ from filinglens.llm.client import (
 )
 from filinglens.llm.validation import EvidenceBinding, RunScope, ValidatedFinding, Verdict, validate
 from filinglens.llm.workflow import FilingChangeWorkflow, build_evidence
+from filinglens.observability import Telemetry, log_context
 from filinglens.parsing.eight_k import PARSER_VERSION as EIGHT_K_VERSION
 from filinglens.parsing.eight_k import parse_eight_k
 from filinglens.parsing.normalizer import NORMALIZER_VERSION, NormalizedDocument, normalize_html
@@ -85,6 +87,8 @@ from filinglens.xbrl.ixbrl import EXTRACTOR_VERSION, extract_ixbrl
 from filinglens.xbrl.normalize import PeriodClass, classify_period
 
 PIPELINE_VERSION = "pipeline/1"
+_LOG = logging.getLogger("filinglens.pipeline")
+_ALERT_CATEGORY = {"source_failure": "source", "parser_failure": "parser", "model_failure": "model"}
 
 
 class SubmissionsSource(Protocol):
@@ -116,6 +120,7 @@ class PipelineDeps:
     findings_repo: FindingRepository
     evidence_repo: EvidenceRepository
     clock: Callable[[], datetime]
+    telemetry: Telemetry = field(default_factory=Telemetry)
 
 
 @dataclass
@@ -156,11 +161,13 @@ def _category(section: str | None, finding_type: str) -> str:
 class AnalysisPipeline:
     def __init__(self, deps: PipelineDeps) -> None:
         self.d = deps
+        self._ctx: dict[str, str] = {}
 
     # -- helpers ------------------------------------------------------------------------------
     def _move(self, run_id: str, *states: RunState) -> None:
         for s in states:
             self.d.runs.transition(run_id, s)
+            _LOG.info("run transition", extra={"state": s.value})
 
     def _stop(
         self, run: ComparisonRun, state: RunState, error: str, alert_kind: str
@@ -171,6 +178,11 @@ class AnalysisPipeline:
             self.d.runs.transition(run.run_id, state)
             stored = self.d.runs.get(run.run_id)
             self.d.runs.runs.save(dataclasses.replace(stored, error=error))
+        category = _ALERT_CATEGORY.get(alert_kind, "internal")
+        self.d.telemetry.error(category)
+        _LOG.error(
+            "run stopped", extra={"state": state.value, "error_category": category, "error": error}
+        )
         self.d.alerts.operational(alert_kind, error, run_id=run.run_id)
         return PipelineResult(self.d.runs.get(run.run_id), notes=[error])
 
@@ -195,7 +207,17 @@ class AnalysisPipeline:
         return loaded
 
     # -- main ---------------------------------------------------------------------------------
-    def run(
+    def run(self, **kwargs: Any) -> PipelineResult:
+        with log_context(
+            accession=str(kwargs.get("focal_accession")), cik=str(kwargs.get("cik"))
+        ) as ctx:
+            self._ctx = ctx
+            with self.d.telemetry.stage("pipeline.run"):
+                result = self._run(**kwargs)
+            _LOG.info("run finished", extra={"state": result.run.state.value})
+            return result
+
+    def _run(
         self,
         *,
         cik: int,
@@ -205,6 +227,7 @@ class AnalysisPipeline:
         fiscal_year_end: str | None = None,
     ) -> PipelineResult:
         run = self.d.runs.create(cik=cik, as_of=as_of, focal_accession=focal_accession)
+        self._ctx["run_id"] = run.run_id
         self._move(run.run_id, RunState.RESOLVING)
         try:
             batch = self.d.submissions.fetch(cik)

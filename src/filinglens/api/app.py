@@ -41,6 +41,7 @@ from filinglens.domain.errors import (
     NotFoundError,
 )
 from filinglens.domain.models import ComparisonRun, Filing, RunState
+from filinglens.infrastructure.storage.sqlite import MIGRATIONS
 from filinglens.logging_setup import configure_logging
 
 API_VERSION = "api/1"
@@ -67,6 +68,30 @@ C = Annotated[Container, Depends(get_container)]
 def _problem(status: int, title: str, detail: str | None) -> JSONResponse:
     body = Problem(title=title, status=status, detail=detail).model_dump()
     return JSONResponse(body, status_code=status, media_type="application/problem+json")
+
+
+def readiness_checks(c: Container) -> dict[str, str]:
+    checks: dict[str, str] = {}
+    try:
+        c.repos.db.query("SELECT 1")
+        latest = MIGRATIONS[-1][0]
+        checks["database"] = (
+            "ok"
+            if c.repos.db.schema_version == latest
+            else f"schema {c.repos.db.schema_version} != {latest}"
+        )
+    except Exception as exc:  # report, never raise from a probe
+        checks["database"] = f"error: {type(exc).__name__}"
+    if c.raw_dir is not None:
+        try:
+            c.raw_dir.mkdir(parents=True, exist_ok=True)
+            probe = c.raw_dir / ".ready-probe"
+            probe.write_bytes(b"")
+            probe.unlink()
+            checks["raw_store"] = "ok"
+        except OSError as exc:
+            checks["raw_store"] = f"error: {type(exc).__name__}"
+    return checks
 
 
 def _page(items: list[Any], limit: int, offset: int) -> dict[str, Any]:
@@ -133,6 +158,36 @@ def create_app(settings: Settings | None = None, container: Container | None = N
     @app.get("/healthz")
     def healthz() -> dict[str, str]:
         return {"status": "ok", "version": __version__, "env": settings.env, "api": API_VERSION}
+
+    @app.get("/ready")
+    def ready(c: C) -> JSONResponse:
+        checks = readiness_checks(c)
+        ok = all(v == "ok" for v in checks.values())
+        return JSONResponse(
+            {"status": "ready" if ok else "not_ready", "checks": checks},
+            status_code=200 if ok else 503,
+        )
+
+    @app.get("/health/detailed")
+    def health_detailed(c: C) -> dict[str, Any]:
+        runs = c.repos.runs.list()
+        by_state: dict[str, int] = {}
+        for r in runs:
+            by_state[r.state.value] = by_state.get(r.state.value, 0) + 1
+        return {
+            "status": "ok",
+            "version": __version__,
+            "api": API_VERSION,
+            "env": settings.env,
+            "checks": readiness_checks(c),
+            "schema_version": c.repos.db.schema_version,
+            "runs_by_state": by_state,
+            "pending_alerts": len(c.repos.alerts.list(acknowledged=False)),
+            "telemetry": c.telemetry.snapshot(),
+            "sec": c.sec_client.metrics.snapshot() if c.sec_client else None,
+            "sec_live_mode": settings.sec_live_mode,
+            "llm_configured": bool(settings.llm_provider),
+        }
 
     @app.get("/issuers/resolve", response_model=ResolutionOut)
     def resolve_issuer(
