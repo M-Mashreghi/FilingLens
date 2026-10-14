@@ -770,7 +770,7 @@ Provide a polished analyst UI for issuer search, filing timeline, run status and
 
 ## Task 6.3 — Filing Comparison Workspace
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Let analysts inspect exact source changes rather than trusting summaries.
@@ -787,10 +787,10 @@ Let analysts inspect exact source changes rather than trusting summaries.
 
 **Definition of Done**
 
-- [ ] Risk Factors/MD&A diff usable
-- [ ] 8-K exhibit evidence accessible
-- [ ] amended/original lineage visible
-- [ ] exact source text locators accessible
+- [x] Risk Factors/MD&A diff usable
+- [x] 8-K exhibit evidence accessible
+- [x] amended/original lineage visible
+- [x] exact source text locators accessible
 
 ## Task 6.4 — Watchlist & New-Filing Workflow
 
@@ -999,6 +999,6 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
-| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 4 | 0 | 2 |
+| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 3 | 0 | 3 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **10** | **0** | **34** |
+| **Total** | **44 tasks** | **9** | **0** | **35** |

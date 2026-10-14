@@ -367,3 +367,8 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 
 - `filinglens.bootstrap.Container` is the composition root (SQLite repositories, run/metadata/report services, optional issuer reference data). It lives outside the application layer so inner layers never import infrastructure.
 - FastAPI (`docs/API.md`) and Streamlit are thin: controllers and `filinglens.ui.viewmodels` only shape data from the container. The dashboard covers issuer search with explicit ambiguity choice, filing timeline with form filters, run creation/status (Failed / NeedsInput / BlockedBySource highlighted with messages) and findings with evidence drill-down (missing evidence is shown, not hidden). Tests run the Streamlit script headless with `AppTest` and enforce that UI modules import no parsing, analytics, XBRL, infrastructure or HTTP code.
+
+### Comparison workspace (Task 6.3)
+
+- `filinglens.ui.workspace.build_workspace` (`workspace/1`) shapes already-computed artifacts — `DiffResult`, `EightKParseResult`, `PeriodLineage`, `MetricResult`s and findings — into panels: current vs comparator metadata, per-section tabs with added/removed/modified counts and magnitude, side-by-side old/new text with exact locators and sentence edits, table cell/row changes, 8-K items with resolved/missing exhibits, amendment lineage (original, amendments, effective), XBRL metric formula/fact lineage, and finding → evidence → section/change navigation. It never recomputes anything.
+- `src/filinglens/ui/pages/comparison.py` renders a prepared workspace from session state (headless `AppTest` covered).
