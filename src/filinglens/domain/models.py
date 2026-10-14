@@ -313,3 +313,22 @@ class RetrievalAttempt:
             raise ValueError("a successful retrieval must reference a snapshot")
         if self.status != "retrieved" and self.snapshot_id is not None:
             raise ValueError("only successful retrievals reference a snapshot")
+
+
+@dataclass(frozen=True, kw_only=True)
+class Watchlist:
+    """Issuer watch with form filter. Only filings public after ``since`` are new."""
+
+    watchlist_id: str
+    cik: int
+    forms: tuple[str, ...]
+    since: datetime
+    active: bool = True
+
+    def __post_init__(self) -> None:
+        _check_cik(self.cik)
+        object.__setattr__(self, "forms", tuple(sorted({f.upper() for f in self.forms})))
+        object.__setattr__(self, "since", ensure_utc(self.since))
+
+    def wants(self, filing: Filing) -> bool:
+        return filing.available_at > self.since and (not self.forms or filing.form in self.forms)

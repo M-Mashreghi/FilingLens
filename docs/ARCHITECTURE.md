@@ -372,3 +372,8 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 
 - `filinglens.ui.workspace.build_workspace` (`workspace/1`) shapes already-computed artifacts — `DiffResult`, `EightKParseResult`, `PeriodLineage`, `MetricResult`s and findings — into panels: current vs comparator metadata, per-section tabs with added/removed/modified counts and magnitude, side-by-side old/new text with exact locators and sentence edits, table cell/row changes, 8-K items with resolved/missing exhibits, amendment lineage (original, amendments, effective), XBRL metric formula/fact lineage, and finding → evidence → section/change navigation. It never recomputes anything.
 - `src/filinglens/ui/pages/comparison.py` renders a prepared workspace from session state (headless `AppTest` covered).
+
+### Watchlists & new-filing workflow (Task 6.4)
+
+- `Watchlist` (cik, forms, `since`) selects filings whose `available_at` is after `since` (no backfill flood on creation). Stored in `watchlists`; per-accession state in `filing_reservations` (migration 6) with status (`reserved` / `enqueued` / `failed`), run id, attempts, last error and `available_at`.
+- `WatchlistPoller.poll_once` (`watchlist-poller/1`) fetches submissions through the governed adapter, ingests idempotently, atomically reserves each new accession (`INSERT OR IGNORE` inside an immediate transaction — concurrent pollers on separate connections cannot both win), then creates exactly one run with a deterministic id `wl-<sha256(watchlist|accession)>`. Run-creation failures mark the reservation `failed` and are retried on the next poll; a crash between run creation and marking is healed because the deterministic run id is reused. Source outages reserve nothing.

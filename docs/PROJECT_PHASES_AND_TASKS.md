@@ -794,7 +794,7 @@ Let analysts inspect exact source changes rather than trusting summaries.
 
 ## Task 6.4 — Watchlist & New-Filing Workflow
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Detect unseen filings for watched issuers and enqueue analysis idempotently.
@@ -809,10 +809,10 @@ Detect unseen filings for watched issuers and enqueue analysis idempotently.
 
 **Definition of Done**
 
-- [ ] repeated polling does not duplicate run
-- [ ] concurrent pollers do not double-enqueue
-- [ ] unseen filing creates exactly one workflow
-- [ ] failures retry without losing accession state
+- [x] repeated polling does not duplicate run
+- [x] concurrent pollers do not double-enqueue
+- [x] unseen filing creates exactly one workflow
+- [x] failures retry without losing accession state
 
 ## Task 6.5 — Research Alerts & Triage Queue
 
@@ -999,6 +999,6 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
-| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 3 | 0 | 3 |
+| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 2 | 0 | 4 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **9** | **0** | **35** |
+| **Total** | **44 tasks** | **8** | **0** | **36** |

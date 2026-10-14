@@ -8,6 +8,7 @@ are recorded in ``schema_migrations``; an existing migration is never edited aft
 
 from __future__ import annotations
 
+import builtins
 import dataclasses
 import sqlite3
 import threading
@@ -32,6 +33,7 @@ from filinglens.domain.models import (
     RunState,
     SecurityIdentifier,
     SourceSnapshot,
+    Watchlist,
 )
 from filinglens.domain.run_lifecycle import RunManifest
 from filinglens.domain.time import utcnow
@@ -124,6 +126,20 @@ MIGRATIONS: list[tuple[int, str]] = [
         CREATE TABLE report_inputs (
             run_id TEXT PRIMARY KEY, inputs_hash TEXT NOT NULL, inputs_json TEXT NOT NULL,
             updated_at TEXT NOT NULL
+        );
+        """,
+    ),
+    (
+        6,
+        """
+        CREATE TABLE watchlists (
+            watchlist_id TEXT PRIMARY KEY, cik INTEGER NOT NULL, payload TEXT NOT NULL
+        );
+        CREATE TABLE filing_reservations (
+            watchlist_id TEXT NOT NULL, accession TEXT NOT NULL, cik INTEGER NOT NULL,
+            status TEXT NOT NULL, run_id TEXT, attempts INTEGER NOT NULL DEFAULT 0,
+            last_error TEXT, available_at TEXT NOT NULL, updated_at TEXT NOT NULL,
+            PRIMARY KEY (watchlist_id, accession)
         );
         """,
     ),
@@ -737,6 +753,74 @@ class SqliteReportInputsStore:
         return str(rows[0][0]) if rows else None
 
 
+class SqliteWatchlistRepository:
+    """Watchlists plus concurrency-safe per-accession reservations."""
+
+    def __init__(self, db: Database) -> None:
+        self.db = db
+
+    def add(self, watchlist: Watchlist) -> Watchlist:
+        with self.db.transaction() as cur:
+            cur.execute(
+                "INSERT OR IGNORE INTO watchlists (watchlist_id, cik, payload) VALUES (?, ?, ?)",
+                (watchlist.watchlist_id, watchlist.cik, dumps(watchlist)),
+            )
+        return watchlist
+
+    def list(self) -> list[Watchlist]:
+        return _rows(self.db, Watchlist, "SELECT payload FROM watchlists ORDER BY watchlist_id")
+
+    def reserve(self, watchlist_id: str, filing: Filing, now: datetime) -> bool:
+        """Atomically claim an accession for a watchlist. True only for the first claimant,
+        or when re-claiming a previously failed reservation for retry."""
+        with self.db.transaction() as cur:
+            inserted = cur.execute(
+                "INSERT OR IGNORE INTO filing_reservations (watchlist_id, accession, cik, status, "
+                "attempts, available_at, updated_at) VALUES (?, ?, ?, 'reserved', 1, ?, ?)",
+                (
+                    watchlist_id,
+                    filing.accession,
+                    filing.cik,
+                    filing.available_at.isoformat(),
+                    now.isoformat(),
+                ),
+            ).rowcount
+            if inserted:
+                return True
+            retried = cur.execute(
+                "UPDATE filing_reservations SET status = 'reserved', attempts = attempts + 1, "
+                "updated_at = ? WHERE watchlist_id = ? AND accession = ? AND status = 'failed'",
+                (now.isoformat(), watchlist_id, filing.accession),
+            ).rowcount
+            return bool(retried)
+
+    def mark(
+        self,
+        watchlist_id: str,
+        accession: str,
+        status: str,
+        now: datetime,
+        *,
+        run_id: str | None = None,
+        error: str | None = None,
+    ) -> None:
+        with self.db.transaction() as cur:
+            cur.execute(
+                "UPDATE filing_reservations SET status = ?, run_id = COALESCE(?, run_id), "
+                "last_error = ?, updated_at = ? WHERE watchlist_id = ? AND accession = ?",
+                (status, run_id, error, now.isoformat(), watchlist_id, _acc(accession)),
+            )
+
+    def reservations(self, watchlist_id: str) -> builtins.list[dict[str, Any]]:
+        cols = ("accession", "status", "run_id", "attempts", "last_error", "available_at")
+        rows = self.db.query(
+            f"SELECT {', '.join(cols)} FROM filing_reservations WHERE watchlist_id = ? "
+            "ORDER BY available_at, accession",
+            (watchlist_id,),
+        )
+        return [dict(zip(cols, r, strict=True)) for r in rows]
+
+
 @dataclasses.dataclass
 class SqliteRepositories:
     """Convenience bundle wiring every repository to one database."""
@@ -754,6 +838,7 @@ class SqliteRepositories:
     reports: SqliteReportRepository = dataclasses.field(init=False)
     attempts: SqliteRetrievalAttemptRepository = dataclasses.field(init=False)
     report_inputs: SqliteReportInputsStore = dataclasses.field(init=False)
+    watchlists: SqliteWatchlistRepository = dataclasses.field(init=False)
 
     def __post_init__(self) -> None:
         self.issuers = SqliteIssuerRepository(self.db)
@@ -768,3 +853,4 @@ class SqliteRepositories:
         self.reports = SqliteReportRepository(self.db)
         self.attempts = SqliteRetrievalAttemptRepository(self.db)
         self.report_inputs = SqliteReportInputsStore(self.db)
+        self.watchlists = SqliteWatchlistRepository(self.db)
