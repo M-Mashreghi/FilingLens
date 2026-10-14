@@ -516,7 +516,7 @@ Normalize facts safely while preserving semantics needed for correct comparisons
 
 ## Task 4.4 — Taxonomy / Concept Mapping & Version-Drift Layer
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Handle evolving SEC-supported taxonomies and issuer extensions without brittle hardcoded tag assumptions.
@@ -531,9 +531,9 @@ Handle evolving SEC-supported taxonomies and issuer extensions without brittle h
 
 **Definition of Done**
 
-- [ ] version drift fixture passes
-- [ ] custom concept never silently mapped to a standard concept
-- [ ] mappings are versioned and auditable
+- [x] version drift fixture passes
+- [x] custom concept never silently mapped to a standard concept
+- [x] mappings are versioned and auditable
 
 ## Task 4.5 — Deterministic Financial Trend Engine
 
@@ -997,8 +997,8 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
-| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 4 | 0 | 3 |
+| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 3 | 0 | 4 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **22** | **0** | **22** |
+| **Total** | **44 tasks** | **21** | **0** | **23** |

@@ -309,3 +309,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - Units are normalized (`iso4217:USD` → `USD`, `xbrli:shares` → `shares`, divide units kept as `A/B`) while the original unit is retained.
 - Duplicate policy `duplicates/consistent-within-coarsest-decimals`: duplicates that agree after rounding to the coarsest declared decimals resolve to the most precise fact; disagreeing duplicates are `conflict` with no value. Several units for one key are a `conflict` unless a unit is requested.
 - Lookups never collapse dimensions (entity-wide lookups only see dimensionless facts) and return `missing` with `value=None` for nil/absent facts — never zero.
+
+### Taxonomy mapping & drift (Task 4.4)
+
+- `filinglens.xbrl.taxonomy` (`concept-map/1`): `taxonomy_version()` reads prefix/year from the fact namespace. `STANDARD_RULES` map standard concepts to canonical metrics (revenue, cost of revenue, gross profit, operating income, net income, operating cash flow, capex, cash, debt, receivables, inventory, current assets/liabilities, shares, diluted EPS) with rule ids, priorities and optional taxonomy-version validity (e.g. `SalesRevenueNet` only through 2018).
+- Custom extension concepts map only through an issuer-scoped `CustomMappingRule` that must carry evidence; dimensional facts never map to entity-wide metrics.
+- `detect_drift` reports taxonomy version changes per prefix and changes in the concepts used for a metric between two filings.
