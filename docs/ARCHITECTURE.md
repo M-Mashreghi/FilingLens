@@ -332,3 +332,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.analytics.reconciliation.reconcile` (`reconciliation/1`) maps MD&A topics to canonical metrics with a polarity (`TOPIC_METRICS`: demand → revenue growth, pricing/margins → margin deltas, costs → gross-margin delta inverted, liquidity → cash change, debt → long-term-debt change).
 - Narrative direction comes from up/down lexicons in the new text of changed blocks; numeric direction from the deterministic metric sign with small neutral bands. Results are `aligned`, `tension`, `mixed` or `insufficient_data` (unmapped topic, unavailable metrics, or indeterminate narrative) and name the driving metrics.
 - Each result keeps the narrative evidence refs and the original `MetricResult`s (fact lineage); nothing is recalculated.
+
+### Retrieval index (Task 5.1)
+
+- `filinglens.retrieval.index.RetrievalIndex` (`retrieval/1`) chunks each document by section then block (max 1,500 chars, never across sections or documents). Chunks keep accession, filename, doc type, section key, block ids, locators, snapshot hash and `available_at`.
+- `RetrievalFilter` requires a non-empty accession set and an `as_of`; optional section/document/doc-type filters. Filters are applied before scoring and re-checked on results, so bounded queries cannot return out-of-filter evidence.
+- Scoring is a deterministic BM25 baseline computed over the filtered candidates only; embedding scorers can be swapped in through the `Scorer` protocol (no vector database in v1).

@@ -600,7 +600,7 @@ Compare management narrative change with deterministic financial direction while
 
 ## Task 5.1 — Section-Aware Retrieval Index
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Retrieve bounded evidence from the correct accession, form, item, document and time slice.
@@ -614,9 +614,9 @@ Retrieve bounded evidence from the correct accession, form, item, document and t
 
 **Definition of Done**
 
-- [ ] retrieval cannot cross requested accession filter
-- [ ] item/document metadata preserved
-- [ ] deterministic fixture queries pass
+- [x] retrieval cannot cross requested accession filter
+- [x] item/document metadata preserved
+- [x] deterministic fixture queries pass
 
 ## Task 5.2 — Structured Filing Intelligence LLM Client
 
@@ -998,7 +998,7 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
-| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
+| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 5 | 0 | 1 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **18** | **0** | **26** |
+| **Total** | **44 tasks** | **17** | **0** | **27** |
