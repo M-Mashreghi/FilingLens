@@ -661,7 +661,7 @@ Combine deterministic textual, exhibit and numeric changes into a coherent first
 
 ## Task 5.4 — Evidence Validator, Contradiction Checker & Priority Scorer
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Block unsupported findings and rank valid ones transparently.
@@ -675,10 +675,10 @@ Block unsupported findings and rank valid ones transparently.
 
 **Definition of Done**
 
-- [ ] wrong accession/document citation blocked
-- [ ] unsupported claim blocked
-- [ ] contradictory output flagged
-- [ ] score reproducible and labeled research priority
+- [x] wrong accession/document citation blocked
+- [x] unsupported claim blocked
+- [x] contradictory output flagged
+- [x] score reproducible and labeled research priority
 
 ## Task 5.5 — Golden Evaluation Corpus & Regression Harness
 
@@ -998,7 +998,7 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
-| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 3 | 0 | 3 |
+| 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 2 | 0 | 4 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **15** | **0** | **29** |
+| **Total** | **44 tasks** | **14** | **0** | **30** |

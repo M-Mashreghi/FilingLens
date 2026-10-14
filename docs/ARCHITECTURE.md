@@ -350,3 +350,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.llm.workflow.build_evidence` turns change signals (old/new text), OK metrics (value, formula, accessions, engine version), flagged watch signals, reconciliations and lineage notes into bounded, id-addressed `EvidenceItem`s (default cap 60).
 - `FilingChangeWorkflow` (`analyst-workflow/1`) picks a form-specific task (10-K, 10-Q, 8-K, amendment), calls the structured client and reviews each finding: basis (`source_fact` vs `deterministic_calculation`; the model text is interpretation), unknown evidence ids flagged, no valid evidence → `not_supported`, numbers absent from cited evidence → `uncertain` + `numeric_unverified`, uncited "management said/expects" claims → `not_supported`.
 - An LLM failure returns `failed` with no findings while keeping the deterministic evidence list; no evidence means no model call.
+
+### Evidence validation & Research Priority (Task 5.4)
+
+- `filinglens.llm.validation.validate` (`evidence-validator/1`) blocks a finding when cited evidence has no provenance binding, points to a snapshot outside the run manifest, a wrong accession, a section different from the finding's item, or a calculation without (in-run) source fact ids; also when the interpretation is `not_supported`, numbers are unverified, a management claim is uncited, or an optional `Reviewer` model rejects it.
+- Opposite directions for the same finding type and section are flagged as contradictions (reason code `contradiction_flagged`).
+- `priority_score` (`research-priority/1`) is a weighted mean of the Task 3.6 features (missing features renormalized away) scaled by model confidence, 0–100, with top-contributor reason codes. It is labelled as an analyst-attention ranking, not legal materiality, and blocked findings get no score.
