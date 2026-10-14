@@ -126,4 +126,4 @@ Do not start Task 1.2.
 
 ## Status
 
-Planning/governance package is complete. Implementation tasks are intentionally not started.
+Implementation: 42 of 44 tasks complete; Task 7.3 awaits an image build on a Docker host (CI `docker` job) and Task 7.6 awaits human v1 sign-off. See `docs/TASKS.md`.

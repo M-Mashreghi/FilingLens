@@ -149,14 +149,14 @@ Update this file only after task verification.
 - [-] Task 7.3 — Docker & Production Configuration (image build pending a Docker host / CI)
 - [x] Task 7.4 — GitHub Actions CI/CD & Release Workflow
 - [x] Task 7.5 — Backup, Restore & Operational Runbook
-- [ ] Task 7.6 — SEC Traffic, Integrity & Release Qualification Gate
+- [-] Task 7.6 — SEC Traffic, Integrity & Release Qualification Gate (automated gates pass; human sign-off pending)
 
 ### Verification — Phase 7
 
 | Item | Detail |
 |---|---|
-| Status | Not Started |
-| Tests | — |
-| Evaluation | — |
-| Docs | — |
-| Notes | — |
+| Status | Automated gates complete (2026-10-14); pending: Docker image build on a Docker host/CI, human v1 sign-off |
+| Tests | `uv run pytest` — 526 passed, 1 skipped (live SEC smoke, opt-in); same suite green on Python 3.12; ruff + mypy strict green |
+| Evaluation | `scripts/run_eval.py` at baseline; `scripts/qualify_release.py` → `docs/release/qualification-v1.json` (all 8 automated checks pass, PIT violations 0, unsupported accepted claims 0) |
+| Docs | ARCHITECTURE §14, DEPLOYMENT (container, CI/CD, release gate), RUNBOOK (diagnostics, backup/restore drill), EVALUATION §6 |
+| Notes | No Docker host on the development machine: image build verified only via CI `docker` job once pushed |

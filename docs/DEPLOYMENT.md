@@ -109,3 +109,21 @@ Back up SQLite + immutable raw snapshots + any manifest/version state required t
 4. **live-smoke** (weekly schedule or manual dispatch with `live_smoke=true`): optional, `continue-on-error`, one governed request at 1 req/s using the `SEC_USER_AGENT` repository variable.
 
 Release procedure: merge to `main` with green CI, tag `vX.Y.Z`, push the tag; the release job publishes only if every quality gate and the Docker smoke pass. Task 7.6's qualification record must accompany a v1 release.
+
+
+## Release Qualification Gate (Task 7.6)
+
+`uv run python scripts/qualify_release.py` (module `filinglens.evaluation.qualification`, `release-gate/1`) writes `docs/release/qualification-v1.json` with the code commit, KPI values, thresholds, waivers and these automated checks:
+
+| Check | Pass condition |
+|---|---|
+| `fair_access_load` | concurrent clients never exceed the configured SEC rate in any 1-second window |
+| `cache_behaviour` | repeat requests are cache hits (one network call) |
+| `bulk_bootstrap_convergence` | bulk `submissions.zip` and per-company JSON yield identical filings |
+| `raw_snapshot_immutability` | corrupt objects detected; overwrite refused; first capture kept |
+| `amendment_lineage` | `as_of` before an amendment returns the original; both stored separately |
+| `golden_evaluation` | no threshold violation, no regression vs baseline |
+| `no_look_ahead` | point-in-time violations = 0 |
+| `citation_integrity` | unsupported accepted claims = 0 and evidence binding = 100% |
+
+A failing check blocks release unless an explicit waiver (`check`, `reason`, `approver`) is recorded. `signed_off_by` / `signed_off_at` are filled by the human release owner only — automation never signs off.

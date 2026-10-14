@@ -966,7 +966,7 @@ Protect SQLite, raw snapshots and completed-run reproducibility through tested r
 
 ## Task 7.6 — SEC Traffic, Integrity & Release Qualification Gate
 
-**Status:** `[ ]` Not Started
+**Status:** `[-]` In Progress — all automated gates pass (`docs/release/qualification-v1.json`); awaiting human v1 sign-off and the Docker image build from Task 7.3
 
 **User Story**  
 Exercise production behavior under bounded concurrency and certify research integrity before v1 release.
@@ -982,10 +982,10 @@ Exercise production behavior under bounded concurrency and certify research inte
 
 **Definition of Done**
 
-- [ ] fair-access load test passes
-- [ ] point-in-time violations = 0
-- [ ] unsupported factual claims in accepted reports = 0 on blocking suite
-- [ ] KPI thresholds/waivers recorded
+- [x] fair-access load test passes
+- [x] point-in-time violations = 0
+- [x] unsupported factual claims in accepted reports = 0 on blocking suite
+- [x] KPI thresholds/waivers recorded
 - [ ] v1 release checklist signed off
 
 ---
@@ -1000,5 +1000,5 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 0 | 0 | 6 |
-| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 2 | 0 | 4 |
-| **Total** | **44 tasks** | **2** | **0** | **42** |
+| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 0 | 2 | 4 |
+| **Total** | **44 tasks** | **0** | **2** | **42** |
