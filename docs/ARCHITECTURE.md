@@ -296,3 +296,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 
 - `filinglens.diff.priority_features.build_features` (`priority-features/1`) turns each `ChangeSignal` into a `FeatureVector` whose features are listed with range and meaning in `FEATURE_SPECS`: section importance, novelty, change magnitude, topic breadth, direction score, amendment/restatement flags, exhibit weight, cross-section recurrence, related XBRL signal, parser confidence, alignment confidence and evidence quality.
 - All values are in [0, 1]; a feature that cannot be computed is `None` (missing is not zero). Vectors are deterministic and carry explanations. Features rank analyst attention only and never encode legal materiality.
+
+### XBRL fact model & direct iXBRL extraction (Tasks 4.1–4.2)
+
+- `filinglens.domain.xbrl.XbrlFact` is shared by both paths and keeps `source` (`companyfacts` vs `ixbrl`), prefix/concept/namespace, standard-vs-custom status (prefix outside the standard taxonomy set), unit, Decimal value or text, period (instant vs duration), decimals/scale/sign, sorted `(axis, member)` dimensions, context id, hidden flag, locator and a content-hash `fact_id`.
+- `filinglens.xbrl.ixbrl.extract_ixbrl` (`ixbrl-extractor/1`, namespace-aware lxml, no network/entity resolution) reads `xbrli:context` (period, explicit and typed members) and `xbrli:unit` (incl. divide units such as `USD/shares`), then every `ix:nonFraction` / `ix:nonNumeric`. Scale and `sign="-"` are applied; `ixt:fixed-zero` / dashes are zero; `xsi:nil` is `None` (missing, not zero). Facts inside `ix:hidden` keep `hidden=True`. Locators are lxml element paths (`tree.find(locator)`).
+- Dimensional facts stay separate from entity-wide facts; unknown contexts/units or unparseable numbers are reported in `errors`, never silently dropped.

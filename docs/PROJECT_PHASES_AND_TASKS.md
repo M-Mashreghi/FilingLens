@@ -471,7 +471,7 @@ Retrieve standardized entity-wide XBRL facts efficiently from official SEC APIs.
 
 ## Task 4.2 — Direct Filing iXBRL Fact Extractor
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Extract filing-specific facts that aggregate APIs may omit, including custom concepts and dimensions.
@@ -486,10 +486,10 @@ Extract filing-specific facts that aggregate APIs may omit, including custom con
 
 **Definition of Done**
 
-- [ ] custom-tag fixture works
-- [ ] dimensional fact fixture works
-- [ ] hidden fact status retained
-- [ ] filing-specific facts trace to accession/locator
+- [x] custom-tag fixture works
+- [x] dimensional fact fixture works
+- [x] hidden fact status retained
+- [x] filing-specific facts trace to accession/locator
 
 ## Task 4.3 — XBRL Context, Unit, Dimension & Period Normalizer
 
@@ -997,8 +997,8 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
-| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 6 | 0 | 1 |
+| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 5 | 0 | 2 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **24** | **0** | **20** |
+| **Total** | **44 tasks** | **23** | **0** | **21** |
