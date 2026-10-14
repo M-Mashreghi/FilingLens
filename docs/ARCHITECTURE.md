@@ -326,3 +326,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 
 - `filinglens.analytics.watch_signals` (`watch-rules/1`) documents each rule's formula and threshold in `RULES`: receivables vs revenue growth (> 0.10), inventory vs revenue growth (> 0.10), OCF vs net income growth (< −0.20), cash decline with higher long-term debt, dilution (> 3%), large revenue change (|growth| > 50%), accounting-policy/critical-estimate text changes (with diff change ids) and restatement-related disclosures/amendments (with accessions).
 - Signals are `flagged`, `not_flagged` or `unknown` (insufficient data — never treated as not flagged). Descriptions are neutral follow-up prompts; a test bans accusatory wording.
+
+### Narrative ↔ numeric reconciliation (Task 4.7)
+
+- `filinglens.analytics.reconciliation.reconcile` (`reconciliation/1`) maps MD&A topics to canonical metrics with a polarity (`TOPIC_METRICS`: demand → revenue growth, pricing/margins → margin deltas, costs → gross-margin delta inverted, liquidity → cash change, debt → long-term-debt change).
+- Narrative direction comes from up/down lexicons in the new text of changed blocks; numeric direction from the deterministic metric sign with small neutral bands. Results are `aligned`, `tension`, `mixed` or `insufficient_data` (unmapped topic, unavailable metrics, or indeterminate narrative) and name the driving metrics.
+- Each result keeps the narrative evidence refs and the original `MetricResult`s (fact lineage); nothing is recalculated.

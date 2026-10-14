@@ -92,17 +92,17 @@ Update this file only after task verification.
 - [x] Task 4.4 — Taxonomy / Concept Mapping & Version-Drift Layer
 - [x] Task 4.5 — Deterministic Financial Trend Engine
 - [x] Task 4.6 — Accounting / Disclosure Watch Signals
-- [ ] Task 4.7 — Narrative ↔ Numeric Reconciliation Engine
+- [x] Task 4.7 — Narrative ↔ Numeric Reconciliation Engine
 
 ### Verification — Phase 4
 
 | Item | Detail |
 |---|---|
-| Status | Not Started |
-| Tests | — |
-| Evaluation | — |
-| Docs | — |
-| Notes | — |
+| Status | Completed (2026-10-13) |
+| Tests | `uv run pytest` — 411 passed; ruff + mypy strict green |
+| Evaluation | Custom/dimensional/hidden iXBRL fixtures; duplicate-context and missing≠zero tests; two-taxonomy drift fixture; hand-verified formula fixtures; neutral watch-rule tests |
+| Docs | ARCHITECTURE §14, SEC_DATA_CONTRACT §1 (companyfacts) |
+| Notes | companyfacts treated as aggregate only; custom concepts never auto-mapped; Python owns all numbers |
 
 ## Phase 5 — LLM / RAG Filing Intelligence & Evaluation
 

@@ -576,7 +576,7 @@ Each signal has neutral language and documented formula.
 
 ## Task 4.7 — Narrative ↔ Numeric Reconciliation Engine
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Compare management narrative change with deterministic financial direction while preserving both evidence types.
@@ -590,9 +590,9 @@ Compare management narrative change with deterministic financial direction while
 
 **Definition of Done**
 
-- [ ] alignment/tension fixtures pass
-- [ ] classification reason names driving metrics
-- [ ] unsupported mapping returns insufficient_data
+- [x] alignment/tension fixtures pass
+- [x] classification reason names driving metrics
+- [x] unsupported mapping returns insufficient_data
 
 ---
 
@@ -997,8 +997,8 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
-| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 1 | 0 | 6 |
+| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **19** | **0** | **25** |
+| **Total** | **44 tasks** | **18** | **0** | **26** |
