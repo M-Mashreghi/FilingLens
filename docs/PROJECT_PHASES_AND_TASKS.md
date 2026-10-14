@@ -557,7 +557,7 @@ All outputs retain source fact ids and transformation definitions.
 
 ## Task 4.6 — Accounting / Disclosure Watch Signals
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Surface rule-based accounting/disclosure patterns for analyst follow-up, not accusations.
@@ -570,9 +570,9 @@ Each signal has neutral language and documented formula.
 
 **Definition of Done**
 
-- [ ] every rule documented/tested
-- [ ] no accusation/fraud language
-- [ ] insufficient data returns unknown
+- [x] every rule documented/tested
+- [x] no accusation/fraud language
+- [x] insufficient data returns unknown
 
 ## Task 4.7 — Narrative ↔ Numeric Reconciliation Engine
 
@@ -997,8 +997,8 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 1 Foundation, Issuer Identity & Provenance | 1.1–1.5 | 0 | 0 | 5 |
 | 2 SEC Ingestion & Filing Package Parsing | 2.1–2.8 | 0 | 0 | 8 |
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
-| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 2 | 0 | 5 |
+| 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 1 | 0 | 6 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 6 | 0 | 0 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 6 | 0 | 0 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **20** | **0** | **24** |
+| **Total** | **44 tasks** | **19** | **0** | **25** |
