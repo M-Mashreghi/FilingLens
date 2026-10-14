@@ -67,8 +67,8 @@
       "passed": true
     }
   ],
-  "code_commit": "76559f77830c1173ac47d6b484461624ff657f5f",
-  "created_at": "2026-10-14T09:25:29.807242+00:00",
+  "code_commit": "ab347ece78170c2da8f4c2c08fc0582661eb74e4",
+  "created_at": "2026-10-14T09:28:20.611984+00:00",
   "gate_version": "release-gate/1",
   "kpis": {
     "ambiguous_detection_rate": 1.0,

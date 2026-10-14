@@ -308,6 +308,28 @@ class SecHttpClient:
             transport=transport,
         )
 
+    @classmethod
+    def offline(
+        cls,
+        responder: Callable[[str], tuple[int, bytes, Mapping[str, str]]],
+        **kwargs: object,
+    ) -> SecHttpClient:
+        """Client backed by an in-process responder (fixtures, drills, qualification).
+
+        ``responder(url) -> (status, body, headers)``; no network is ever used.
+        """
+
+        def handler(req: httpx.Request) -> httpx.Response:
+            status, body, headers = responder(str(req.url))
+            return httpx.Response(status, content=body, headers=dict(headers))
+
+        params: dict[str, object] = {
+            "user_agent": "FilingLens offline-fixtures test@example.com",
+            "live": False,
+        }
+        params.update(kwargs)
+        return cls(transport=httpx.MockTransport(handler), **params)  # type: ignore[arg-type]
+
     def close(self) -> None:
         self._http.close()
 

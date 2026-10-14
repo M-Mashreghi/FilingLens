@@ -29,8 +29,6 @@ from datetime import UTC, date, datetime
 from pathlib import Path
 from typing import Any
 
-import httpx
-
 from filinglens import __version__
 from filinglens.domain.models import Filing, SourceSnapshot
 from filinglens.evaluation.harness import run_eval
@@ -80,15 +78,13 @@ def fair_access_load_test(
     stamps: list[float] = []
     lock = threading.Lock()
 
-    def handler(req: httpx.Request) -> httpx.Response:
+    def responder(url: str) -> tuple[int, bytes, dict[str, str]]:
         with lock:
             stamps.append(time.monotonic())
-        return httpx.Response(200, content=b"{}")
+        return 200, b"{}", {}
 
-    client = SecHttpClient(
-        user_agent="FilingLens qualification qa@example.com",
-        live=False,
-        transport=httpx.MockTransport(handler),
+    client = SecHttpClient.offline(
+        responder,
         max_rps=rps,
         max_concurrency=workers,
         governor=RateGovernor(rps),
@@ -123,20 +119,18 @@ def fair_access_load_test(
 def cache_behaviour_check() -> CheckResult:
     calls = 0
 
-    def handler(req: httpx.Request) -> httpx.Response:
+    def responder(url: str) -> tuple[int, bytes, dict[str, str]]:
         nonlocal calls
         calls += 1
-        return httpx.Response(200, content=b"x", headers={"ETag": '"1"'})
+        return 200, b"x", {"ETag": '"1"'}
 
-    client = SecHttpClient(
-        user_agent="FilingLens qualification qa@example.com",
-        live=False,
-        transport=httpx.MockTransport(handler),
+    client = SecHttpClient.offline(
+        responder,
         cache=InMemoryHttpCache(),
         governor=RateGovernor(1000),
     )
     for _ in range(5):
-        client.get("https://data.sec.gov/submissions/CIK0000000001.json")
+        client.get("https://www.sec.gov/Archives/edgar/data/1/000000000124000001/index.json")
     hit_rate = client.metrics.cache_hits / client.metrics.requests
     return CheckResult(
         "cache_behaviour",
