@@ -388,3 +388,9 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 
 - `filinglens.reporting.export` (`export-schema/1`) produces Markdown (the report), versioned JSON validated by the pydantic `ExportDocument` (run, provenance: snapshot ids, component/calculation/prompt/model versions, report version, inputs hash, blocked-finding count; findings with resolved citation locators; research-priority note), a CSV findings table with citation locators, and escaped printable HTML.
 - Exports refuse any finding without resolvable citations, so no model-only claim can leave the system. `package_artifacts` writes all formats plus `manifest.json` with sha256 per file; exports are deterministic.
+
+### End-to-end pipeline (Task 7.1)
+
+- `filinglens.application.pipeline.AnalysisPipeline` (`pipeline/1`) wires every stage with injected adapters: submissions → comparator selection (recorded in the manifest) → package manifests → governed retrieval into the raw store → normalization, 10-K/10-Q sections or 8-K events → iXBRL extraction → alignment/diff → detectors, trend engine, watch rules, reconciliation, priority features → LLM workflow → evidence validation → persisted findings/evidence → staged report → optional reviewer finalization (`Completed`).
+- Source problems move the run to `BlockedBySource`, missing structure or rejected model output to `NeedsInput`, an unpublished focal filing to `Failed`; each raises an operational alert and produces no report.
+- `tests/e2e` drives the whole chain offline (mock SEC transport serving a synthetic issuer's submissions, index pages, iXBRL 10-Ks, a 10-K/A, 8-Ks with exhibits; scripted LLM): happy 10-K, 8-K + exhibit, amendment lineage, source failure, malformed model output, unsupported finding blocked, point-in-time exclusion and report reproducibility, with provenance assertions (snapshot hashes re-verified from the raw store).

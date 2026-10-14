@@ -860,7 +860,7 @@ Export research outputs without losing provenance or methodology.
 
 ## Task 7.1 — End-to-End Filing Intelligence Suite
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Prove issuer → package → parse → lineage → diff → XBRL → LLM → evidence → report with deterministic fixtures.
@@ -877,9 +877,9 @@ Prove issuer → package → parse → lineage → diff → XBRL → LLM → evi
 
 **Definition of Done**
 
-- [ ] all critical E2E scenarios green
-- [ ] no live SEC/LLM dependency in mandatory CI
-- [ ] provenance assertions included
+- [x] all critical E2E scenarios green
+- [x] no live SEC/LLM dependency in mandatory CI
+- [x] provenance assertions included
 
 ## Task 7.2 — Observability, Structured Logging & Health Checks
 
@@ -1000,5 +1000,5 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 0 | 0 | 6 |
-| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **6** | **0** | **38** |
+| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 5 | 0 | 1 |
+| **Total** | **44 tasks** | **5** | **0** | **39** |

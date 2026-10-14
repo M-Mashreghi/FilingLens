@@ -144,7 +144,7 @@ Update this file only after task verification.
 
 ## Phase 7 — Hardening, CI/CD & Production Integrity
 
-- [ ] Task 7.1 — End-to-End Filing Intelligence Suite
+- [x] Task 7.1 — End-to-End Filing Intelligence Suite
 - [ ] Task 7.2 — Observability, Structured Logging & Health Checks
 - [ ] Task 7.3 — Docker & Production Configuration
 - [ ] Task 7.4 — GitHub Actions CI/CD & Release Workflow
