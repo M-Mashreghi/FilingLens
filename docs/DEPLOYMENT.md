@@ -97,3 +97,15 @@ Back up SQLite + immutable raw snapshots + any manifest/version state required t
 - `docker-compose.yml` runs `api` (uvicorn) and `ui` (Streamlit) from the same image, sharing the volumes; configuration and secrets come from `.env` at runtime. `.dockerignore` excludes `.env`, data, caches, tests and VCS metadata; no secret is set via `ENV`/`ARG`.
 - Build/run: `docker compose build && docker compose up -d`; readiness at `http://localhost:8000/ready`.
 - Verification status: the production start/readiness/graceful-shutdown path is tested by starting the real uvicorn command; the image build itself runs in the CI `docker` job (no Docker host was available on the development machine).
+
+
+## Implemented CI/CD (Task 7.4)
+
+`.github/workflows/ci.yml`:
+
+1. **quality** (every push/PR): `uv lock --check`, locked install on Python 3.12, `ruff format --check`, `ruff check`, `mypy` (strict), `pytest -m "not live_sec and not live_llm"` (unit, integration, regression, e2e — all offline), golden evaluation smoke (`scripts/run_eval.py`, fails on threshold violation or regression), and `pip-audit` over the exported locked third-party requirements.
+2. **docker** (needs quality): builds the image, starts it, probes `/healthz` and `/ready`, checks the non-root uid and stops it gracefully.
+3. **release** (tags `v*`, needs quality + docker): builds and pushes `ghcr.io/<owner>/<repo>:<tag>` with the built-in `GITHUB_TOKEN` (`packages: write` only for this job).
+4. **live-smoke** (weekly schedule or manual dispatch with `live_smoke=true`): optional, `continue-on-error`, one governed request at 1 req/s using the `SEC_USER_AGENT` repository variable.
+
+Release procedure: merge to `main` with green CI, tag `vX.Y.Z`, push the tag; the release job publishes only if every quality gate and the Docker smoke pass. Task 7.6's qualification record must accompany a v1 release.

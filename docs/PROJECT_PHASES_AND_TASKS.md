@@ -926,7 +926,7 @@ Package the modular monolith reproducibly with durable provenance storage and re
 
 ## Task 7.4 — GitHub Actions CI/CD & Release Workflow
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Block releases on code quality, tests and integrity gates.
@@ -939,10 +939,10 @@ Block releases on code quality, tests and integrity gates.
 
 **Definition of Done**
 
-- [ ] failing tests block release
-- [ ] workflow syntax validated
-- [ ] live smoke is optional/non-flaky
-- [ ] release docs updated
+- [x] failing tests block release
+- [x] workflow syntax validated
+- [x] live smoke is optional/non-flaky
+- [x] release docs updated
 
 ## Task 7.5 — Backup, Restore & Operational Runbook
 
@@ -1000,5 +1000,5 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
 | 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 0 | 0 | 6 |
-| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 3 | 1 | 2 |
-| **Total** | **44 tasks** | **3** | **1** | **40** |
+| 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 3 | 0 | 3 |
+| **Total** | **44 tasks** | **3** | **0** | **41** |

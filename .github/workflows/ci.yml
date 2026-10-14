@@ -1,0 +1,108 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+    tags: ["v*"]
+  pull_request:
+  schedule:
+    - cron: "17 6 * * 1"  # weekly optional live SEC smoke
+  workflow_dispatch:
+    inputs:
+      live_smoke:
+        description: "Run the optional live SEC smoke test"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    name: lint, types, tests, eval, audit
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.3"
+      - name: Validate lock file
+        run: uv lock --check
+      - name: Install (locked)
+        run: uv sync --frozen --python 3.12
+      - name: Format
+        run: uv run ruff format --check .
+      - name: Lint
+        run: uv run ruff check .
+      - name: Type check
+        run: uv run mypy
+      - name: Tests (unit, integration, regression, e2e; no live SEC/LLM)
+        run: uv run pytest -q -m "not live_sec and not live_llm"
+      - name: Golden evaluation smoke
+        run: uv run python scripts/run_eval.py
+      - name: Dependency audit
+        run: |
+          uv export --frozen --no-dev --no-hashes --no-emit-project --format requirements-txt > requirements-audit.txt
+          uvx pip-audit --requirement requirements-audit.txt --strict
+
+  docker:
+    name: docker build smoke
+    needs: quality
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build image
+        run: docker build -t filinglens:ci .
+      - name: Start and probe
+        run: |
+          docker run -d --name fl -p 8000:8000 filinglens:ci
+          for i in $(seq 1 30); do curl -fsS http://127.0.0.1:8000/healthz && break; sleep 2; done
+          curl -fsS http://127.0.0.1:8000/ready
+          test "$(docker exec fl id -u)" = "10001"
+          docker stop --time 30 fl
+
+  release:
+    name: publish image
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [quality, docker]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build and push
+        run: |
+          IMAGE=ghcr.io/${{ github.repository }}:${GITHUB_REF_NAME}
+          docker build -t "${IMAGE,,}" .
+          docker push "${IMAGE,,}"
+
+  live-smoke:
+    name: optional live SEC smoke (low request budget)
+    if: github.event_name == 'schedule' || (github.event_name == 'workflow_dispatch' && inputs.live_smoke)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    timeout-minutes: 10
+    env:
+      FILINGLENS_LIVE_SEC: "1"
+      SEC_LIVE_MODE: "true"
+      SEC_USER_AGENT: ${{ vars.SEC_USER_AGENT }}
+      SEC_MAX_RPS: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.12.3"
+      - run: uv sync --frozen --python 3.12
+      - run: uv run pytest -q -m live_sec tests/live
