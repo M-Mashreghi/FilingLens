@@ -130,17 +130,17 @@ Update this file only after task verification.
 - [x] Task 6.3 — Filing Comparison Workspace
 - [x] Task 6.4 — Watchlist & New-Filing Workflow
 - [x] Task 6.5 — Research Alerts & Triage Queue
-- [ ] Task 6.6 — Export & Research Artifact Packaging
+- [x] Task 6.6 — Export & Research Artifact Packaging
 
 ### Verification — Phase 6
 
 | Item | Detail |
 |---|---|
-| Status | Not Started |
-| Tests | — |
-| Evaluation | — |
-| Docs | — |
-| Notes | — |
+| Status | Completed (2026-10-13) |
+| Tests | `uv run pytest` — 490 passed; ruff + mypy strict green |
+| Evaluation | API integration tests; headless Streamlit AppTest flows; 4-thread concurrent poller test on a file DB; export schema tests |
+| Docs | ARCHITECTURE §14, docs/API.md |
+| Notes | UI/API thin (import guards); webhook adapter refuses SEC hosts; exports carry full provenance |
 
 ## Phase 7 — Hardening, CI/CD & Production Integrity
 

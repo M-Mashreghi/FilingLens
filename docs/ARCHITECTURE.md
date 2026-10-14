@@ -383,3 +383,8 @@ FastAPI exposes application services. Streamlit provides issuer search, timeline
 - `filinglens.application.alerts.AlertService` (`alerts/1`) raises `new_filing`, `high_priority_finding` (accepted findings at or above a research-priority threshold), `restatement_signal` and operational (`source_failure`, `parser_failure`, `model_failure`) alerts. Dedupe keys (`new_filing:<acc>`, `finding:<run>:<type>:<section>`, `restatement:<acc>`, `op:<kind>:<run|error>`) suppress duplicates; research alerts must link to a run and `deep_link()` points at the run/finding (operational alerts carry the error).
 - `triage_queue()` lists unacknowledged alerts by priority then age; `acknowledge()` updates state.
 - Optional `HttpWebhookNotifier` (`infrastructure/notify/webhook.py`, refuses SEC hosts) is called after the alert is stored; delivery failures are recorded in `deliveries` and never roll back alert or analysis state.
+
+### Export & artifact packaging (Task 6.6)
+
+- `filinglens.reporting.export` (`export-schema/1`) produces Markdown (the report), versioned JSON validated by the pydantic `ExportDocument` (run, provenance: snapshot ids, component/calculation/prompt/model versions, report version, inputs hash, blocked-finding count; findings with resolved citation locators; research-priority note), a CSV findings table with citation locators, and escaped printable HTML.
+- Exports refuse any finding without resolvable citations, so no model-only claim can leave the system. `package_artifacts` writes all formats plus `manifest.json` with sha256 per file; exports are deterministic.

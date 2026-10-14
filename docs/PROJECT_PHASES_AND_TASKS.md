@@ -837,7 +837,7 @@ Turn findings into a manageable analyst review queue instead of noisy notificati
 
 ## Task 6.6 — Export & Research Artifact Packaging
 
-**Status:** `[ ]` Not Started
+**Status:** `[x]` Completed
 
 **User Story**  
 Export research outputs without losing provenance or methodology.
@@ -850,9 +850,9 @@ Export research outputs without losing provenance or methodology.
 
 **Definition of Done**
 
-- [ ] export schema tests pass
-- [ ] citations/provenance preserved
-- [ ] no hidden model-only claim appears in export
+- [x] export schema tests pass
+- [x] citations/provenance preserved
+- [x] no hidden model-only claim appears in export
 
 ---
 
@@ -999,6 +999,6 @@ Exercise production behavior under bounded concurrency and certify research inte
 | 3 Filing Lineage, Diff & Change Intelligence | 3.1–3.6 | 0 | 0 | 6 |
 | 4 XBRL & Deterministic Financial Signals | 4.1–4.7 | 0 | 0 | 7 |
 | 5 LLM / RAG Filing Intelligence & Evaluation | 5.1–5.6 | 0 | 0 | 6 |
-| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 1 | 0 | 5 |
+| 6 API, Dashboard, Watchlists & Research Workflow | 6.1–6.6 | 0 | 0 | 6 |
 | 7 Hardening, CI/CD & Production Integrity | 7.1–7.6 | 6 | 0 | 0 |
-| **Total** | **44 tasks** | **7** | **0** | **37** |
+| **Total** | **44 tasks** | **6** | **0** | **38** |
