@@ -126,4 +126,4 @@ Do not start Task 1.2.
 
 ## Status
 
-Implementation: 42 of 44 tasks complete; Task 7.3 awaits an image build on a Docker host (CI `docker` job) and Task 7.6 awaits human v1 sign-off. See `docs/TASKS.md`.
+Implementation: 43 of 44 tasks complete; Task 7.3 awaits an image build on a Docker host (CI `docker` job). Task 7.6 was signed off 2026-11-03. See `docs/TASKS.md`.
